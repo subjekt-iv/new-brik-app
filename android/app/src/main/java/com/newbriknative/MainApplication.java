@@ -4,6 +4,9 @@ import android.app.Application;
 import android.content.res.Configuration;
 import androidx.annotation.NonNull;
 
+import android.content.res.Configuration;
+import expo.modules.ApplicationLifecycleDispatcher;
+import expo.modules.ReactNativeHostWrapper;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
@@ -70,6 +73,7 @@ public class MainApplication extends Application implements ReactApplication {
     }
     if (BuildConfig.DEBUG) {
       ReactNativeFlipper.initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+      ApplicationLifecycleDispatcher.onApplicationCreate(this);
     }
     ApplicationLifecycleDispatcher.onApplicationCreate(this);
   }
