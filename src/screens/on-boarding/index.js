@@ -1,8 +1,7 @@
 import React from "react";
-import { useAtom } from "jotai";
-
 import { View, Text, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useAtom } from "jotai";
 import { tokenAtom } from "../../services/store/user";
 
 function OnBoardingScreen({ navigation }) {

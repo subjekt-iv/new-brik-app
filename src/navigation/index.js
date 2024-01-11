@@ -1,28 +1,28 @@
-import { useAtom } from "jotai";
-import { isLoggedAtom } from "../services/store/user";
+import { useEffect, useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { useAtom } from "jotai";
+import { loadableIsLoggedAtom } from "../services/store/user";
 import { MainTabs } from "./tabs/main";
 import { OnBoardingStack } from "./stacks/on-boarding";
-import { useEffect } from "react";
+
 const Stack = createStackNavigator();
 
-export function MainNavigator() {
-  const [isLogged] = useAtom(isLoggedAtom);
+function OnBoarding() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="OnBoardingStack"
+        component={OnBoardingStack}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
 
-  if (!isLogged) {
-    return (
-      <Stack.Navigator>
-        <Stack.Screen
-          name="OnBoardingStack"
-          component={OnBoardingStack}
-          options={{
-            headerShown: false,
-          }}
-        />
-      </Stack.Navigator>
-    );
-  }
-
+function Home() {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -33,5 +33,28 @@ export function MainNavigator() {
         }}
       />
     </Stack.Navigator>
+  );
+}
+
+export function MainNavigator() {
+  const [isLogged] = useAtom(loadableIsLoggedAtom);
+  const [loading, setLoading] = useState(true);
+
+  console.log(isLogged);
+
+  useEffect(() => {
+    if (isLogged.state !== "loading") {
+      setLoading(false);
+    }
+  }, [isLogged]);
+
+  if (loading) {
+    return null;
+  }
+
+  return (
+    <NavigationContainer>
+      {isLogged?.data ? <Home /> : <OnBoarding />}
+    </NavigationContainer>
   );
 }

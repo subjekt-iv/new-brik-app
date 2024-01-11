@@ -1,5 +1,6 @@
-import { atom } from "jotai";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { atom } from "jotai";
+import { loadable } from "jotai/utils";
 
 const atomWithAsyncStorage = (key, initialValue) => {
   const baseAtom = atom(initialValue);
@@ -22,6 +23,8 @@ const atomWithAsyncStorage = (key, initialValue) => {
 };
 
 const tokenAtom = atomWithAsyncStorage("token", null);
-const isLoggedAtom = atom((get) => !!get(tokenAtom));
+const isLoggedAtom = atom(async (get) => !!get(tokenAtom));
 
-export { tokenAtom, isLoggedAtom };
+const loadableIsLoggedAtom = loadable(isLoggedAtom);
+
+export { tokenAtom, isLoggedAtom, loadableIsLoggedAtom };
