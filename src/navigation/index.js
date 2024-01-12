@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useAtom } from "jotai";
 import { loadableIsLoggedAtom } from "../services/store/user";
-import { MainTabs } from "./tabs/main";
+import { HomeTabs } from "./tabs/home";
 import { OnBoardingStack } from "./stacks/on-boarding";
 import { navigationRef } from "../services/router";
 
@@ -28,7 +28,7 @@ function Home() {
     <Stack.Navigator>
       <Stack.Screen
         name="HomeStack"
-        component={MainTabs}
+        component={HomeTabs}
         options={{
           headerShown: false,
         }}

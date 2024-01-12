@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Text } from "react-native";
+import Button from "../../components/atoms/button";
 import { useAtom } from "jotai";
 import { tokenAtom } from "../../services/store/user";
 
@@ -13,9 +13,7 @@ function HomeScreen({ navigation }) {
   return (
     <SafeAreaContainer>
       <Container>
-        <Button onPress={handleOnPress}>
-          <Text>Go to Onboarding</Text>
-        </Button>
+        <Button onPress={handleOnPress} title="Go to on-boarding" />
       </Container>
     </SafeAreaContainer>
   );
@@ -23,18 +21,13 @@ function HomeScreen({ navigation }) {
 
 const SafeAreaContainer = styled.SafeAreaView`
   flex: 1;
+  background-color: ${({ theme }) => theme.background.app};
 `;
 
 const Container = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
-`;
-
-const Button = styled.TouchableOpacity`
-  padding: 20px;
-  border-radius: 10px;
-  background-color: #eee;
 `;
 
 export default HomeScreen;

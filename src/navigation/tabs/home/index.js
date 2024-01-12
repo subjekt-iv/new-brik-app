@@ -3,7 +3,7 @@ import HomeScreen from "../../../screens/home";
 
 const Tab = createBottomTabNavigator();
 
-export function MainTabs() {
+export function HomeTabs() {
   return (
     <Tab.Navigator>
       <Tab.Screen
