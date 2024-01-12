@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, SafeAreaView } from "react-native";
 import { useAtom } from "jotai";
 import { tokenAtom } from "../../services/store/user";
 
@@ -8,12 +8,13 @@ function HomeScreen({ navigation }) {
   const handleOnPress = () => {
     setToken(null);
   };
+
   return (
-    <View>
+    <SafeAreaView>
       <TouchableOpacity onPress={handleOnPress}>
         <Text>Go to Onboarding</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
 

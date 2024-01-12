@@ -3,13 +3,13 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAtom } from "jotai";
 import { tokenAtom } from "../../services/store/user";
+import { navigate } from "../../services/router";
 
-function OnBoardingScreen({ navigation }) {
+function OnBoardingScreen() {
   const [token, setToken] = useAtom(tokenAtom);
 
   const handleOnPress = () => {
     setToken("token");
-    navigation.navigate("HomeStack");
   };
 
   return (

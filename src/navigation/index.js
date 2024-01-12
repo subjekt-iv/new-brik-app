@@ -5,6 +5,7 @@ import { useAtom } from "jotai";
 import { loadableIsLoggedAtom } from "../services/store/user";
 import { MainTabs } from "./tabs/main";
 import { OnBoardingStack } from "./stacks/on-boarding";
+import { navigationRef } from "../services/router";
 
 const Stack = createStackNavigator();
 
@@ -40,12 +41,10 @@ export function MainNavigator() {
   const [isLogged] = useAtom(loadableIsLoggedAtom);
   const [loading, setLoading] = useState(true);
 
-  console.log(isLogged);
-
   useEffect(() => {
-    if (isLogged.state !== "loading") {
-      setLoading(false);
-    }
+    isLogged.state !== "loading" && setLoading(false);
+    isLogged.data && navigationRef.current?.navigate("HomeStack");
+    !isLogged.data && navigationRef.current?.navigate("OnBoardingStack");
   }, [isLogged]);
 
   if (loading) {
@@ -53,7 +52,7 @@ export function MainNavigator() {
   }
 
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       {isLogged?.data ? <Home /> : <OnBoarding />}
     </NavigationContainer>
   );
