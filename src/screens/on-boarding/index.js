@@ -3,6 +3,7 @@ import { useAtom } from "jotai";
 import { tokenAtom } from "../../services/store/user";
 import Button from "../../components/atoms/button";
 import Input from "../../components/atoms/input";
+import Logo from "../../components/atoms/logo";
 
 function OnBoardingScreen() {
   const [token, setToken] = useAtom(tokenAtom);
@@ -14,6 +15,7 @@ function OnBoardingScreen() {
   return (
     <SafeAreaContainer>
       <Container>
+        <Logo />
         <Button onPress={handleOnPress} title="Registrarse" />
         <Input placeholder="Correo electrónico" />
       </Container>
@@ -23,6 +25,7 @@ function OnBoardingScreen() {
 
 const SafeAreaContainer = styled.SafeAreaView`
   flex: 1;
+  background-color: ${({ theme }) => theme.background.app};
 `;
 
 const Container = styled.View`
