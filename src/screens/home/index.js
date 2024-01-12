@@ -3,19 +3,16 @@ import Button from "../../components/atoms/button";
 import { useAtom } from "jotai";
 import { tokenAtom } from "../../services/store/user";
 import { HomeTopBar } from "../../components/molecules/home-top-bar";
+import { HomeBalanceCard } from "../../components/molecules/home-balance-card";
 
 function HomeScreen({ navigation }) {
   const [token, setToken] = useAtom(tokenAtom);
-
-  const handleOnPress = () => {
-    setToken(null);
-  };
 
   return (
     <SafeAreaContainer>
       <Container>
         <HomeTopBar />
-        <Button onPress={handleOnPress} title="Go to on-boarding" />
+        <HomeBalanceCard />
       </Container>
     </SafeAreaContainer>
   );
