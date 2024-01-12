@@ -1,9 +1,7 @@
-import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import styled from "styled-components";
+import { Text } from "react-native";
 import { useAtom } from "jotai";
 import { tokenAtom } from "../../services/store/user";
-import { navigate } from "../../services/router";
 
 function OnBoardingScreen() {
   const [token, setToken] = useAtom(tokenAtom);
@@ -13,31 +11,30 @@ function OnBoardingScreen() {
   };
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-      }}
-    >
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <TouchableOpacity
-          onPress={handleOnPress}
-          style={{
-            padding: 20,
-            borderRadius: 10,
-            backgroundColor: "#eee",
-          }}
-        >
+    <SafeAreaContainer>
+      <Container>
+        <Button onPress={handleOnPress}>
           <Text>Onboarding done</Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+        </Button>
+      </Container>
+    </SafeAreaContainer>
   );
 }
+
+const SafeAreaContainer = styled.SafeAreaView`
+  flex: 1;
+`;
+
+const Container = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Button = styled.TouchableOpacity`
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #eee;
+`;
 
 export default OnBoardingScreen;
