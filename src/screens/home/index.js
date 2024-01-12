@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Button from "../../components/atoms/button";
 import { useAtom } from "jotai";
 import { tokenAtom } from "../../services/store/user";
+import { HomeTopBar } from "../../components/molecules/home-top-bar";
 
 function HomeScreen({ navigation }) {
   const [token, setToken] = useAtom(tokenAtom);
@@ -13,6 +14,7 @@ function HomeScreen({ navigation }) {
   return (
     <SafeAreaContainer>
       <Container>
+        <HomeTopBar />
         <Button onPress={handleOnPress} title="Go to on-boarding" />
       </Container>
     </SafeAreaContainer>
@@ -27,7 +29,6 @@ const SafeAreaContainer = styled.SafeAreaView`
 const Container = styled.View`
   flex: 1;
   align-items: center;
-  justify-content: center;
 `;
 
 export default HomeScreen;
