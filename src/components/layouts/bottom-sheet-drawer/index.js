@@ -1,10 +1,16 @@
+import { View } from "react-native";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useAtom } from "jotai";
-import { openBottomSheetAtom } from "@services/store/bottom-sheet";
-import { bottomSheetConfigAtom } from "@services/store/bottom-sheet";
+import {
+  openBottomSheetAtom,
+  bottomSheetConfigAtom,
+} from "@services/store/bottom-sheet";
+import { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
+import { useTheme } from "styled-components/native";
 
 export function BottomSheetDrawer() {
+  const theme = useTheme();
   const [openBottomSheet, setOpenBottomSheet] = useAtom(openBottomSheetAtom);
   const [bottomSheetConfig, setBottomSheetConfig] = useAtom(
     bottomSheetConfigAtom
@@ -29,6 +35,18 @@ export function BottomSheetDrawer() {
     }
   }, [openBottomSheet, setOpenBottomSheet]);
 
+  const renderBackdrop = useCallback(
+    (props) => (
+      <BottomSheetBackdrop
+        {...props}
+        disappearsOnIndex={-1}
+        appearsOnIndex={1}
+        opacity={0.2}
+      />
+    ),
+    []
+  );
+
   return (
     <BottomSheet
       index={-1}
@@ -36,6 +54,10 @@ export function BottomSheetDrawer() {
       ref={bottomSheetRef}
       onChange={handleSheetChanges}
       enablePanDownToClose={true}
+      backdropComponent={renderBackdrop}
+      backgroundStyle={{
+        backgroundColor: theme.background.app,
+      }}
     ></BottomSheet>
   );
 }
