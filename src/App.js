@@ -2,8 +2,8 @@ import { ThemeProvider } from "styled-components";
 import { StatusBar } from "expo-status-bar";
 import { Provider } from "jotai";
 import { MainNavigator } from "./navigation";
-import { themeConfig } from "./services/theme/config";
-import { BottomSheetDrawer } from "./components/layouts/bottom-sheet-drawer";
+import { themeConfig } from "@services/theme/config";
+import { BottomSheetDrawer } from "@components/templates/bottom-sheet-drawer";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function App() {

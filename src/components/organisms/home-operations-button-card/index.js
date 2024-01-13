@@ -2,7 +2,10 @@ import { View } from "react-native";
 import styled from "styled-components/native";
 import { ButtonIconSquare } from "@components/molecules/button-icon-square";
 import { useAtom } from "jotai";
-import { openBottomSheetAtom } from "@services/store/bottom-sheet";
+import {
+  openBottomSheetAtom,
+  bottomSheetConfigAtom,
+} from "@services/store/bottom-sheet";
 
 const Container = styled(View)`
   flex: 1;
@@ -15,9 +18,35 @@ const Container = styled(View)`
 
 export function HomeOperationsButton() {
   const [openBottomSheet, setOpenBottomSheet] = useAtom(openBottomSheetAtom);
+  const [bottomSheetConfig, setBottomSheetConfig] = useAtom(
+    bottomSheetConfigAtom
+  );
 
-  const handleOpenBottomSheet = () => {
+  const handleSendAction = () => {
     setOpenBottomSheet(true);
+    setBottomSheetConfig({
+      type: "send",
+      title: "Enviar",
+      subTitle: "Selecciona la moneda que quieres enviar.",
+    });
+  };
+
+  const handleDepositAction = () => {
+    setOpenBottomSheet(true);
+    setBottomSheetConfig({
+      type: "deposit",
+      title: "Depositar",
+      subTitle: "Selecciona la moneda que quieres ingresar.",
+    });
+  };
+
+  const handleConvertAction = () => {
+    setOpenBottomSheet(true);
+    setBottomSheetConfig({
+      type: "convert",
+      title: "Convertir",
+      subTitle: "Selecciona la moneda que quieres convertir.",
+    });
   };
 
   return (
@@ -25,10 +54,18 @@ export function HomeOperationsButton() {
       <ButtonIconSquare
         iconName="arrow-up"
         label="Enviar"
-        onPress={handleOpenBottomSheet}
+        onPress={handleSendAction}
       />
-      <ButtonIconSquare iconName="arrow-down" label="Ingresa" />
-      <ButtonIconSquare iconName="exchange-alt" label="Convertir" />
+      <ButtonIconSquare
+        iconName="arrow-down"
+        label="Ingresa"
+        onPress={handleDepositAction}
+      />
+      <ButtonIconSquare
+        iconName="exchange-alt"
+        label="Convertir"
+        onPress={handleConvertAction}
+      />
     </Container>
   );
 }
