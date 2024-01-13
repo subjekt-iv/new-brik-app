@@ -2,7 +2,7 @@ import BottomSheet from "react-native-simple-bottom-sheet";
 import { Text, View, TouchableOpacity } from "react-native";
 import { useEffect, useRef } from "react";
 import { useAtom } from "jotai";
-import { openBottomSheetAtom } from "../../../services/store/bottom-sheet";
+import { openBottomSheetAtom } from "@services/store/bottom-sheet";
 
 export function BottomSheetDrawer() {
   const [openBottomSheet, setOpenBottomSheet] = useAtom(openBottomSheetAtom);

@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 import { scale } from "react-native-size-matters";
 import { Pressable } from "react-native";
-import IconComponent from "../../atoms/icon";
+import IconComponent from "@components/atoms/icon";
 import { useTheme } from "styled-components/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 

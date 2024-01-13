@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 import { View, Text } from "react-native";
 import { scale } from "react-native-size-matters";
-import IconComponent from "../../atoms/icon";
+import IconComponent from "@components/atoms/icon";
 import { useTheme } from "styled-components/native";
 import Animated, { LightSpeedInLeft } from "react-native-reanimated";
 
