@@ -3,8 +3,9 @@ import { View, Text } from "react-native";
 import { scale } from "react-native-size-matters";
 import IconComponent from "../../atoms/icon";
 import { useTheme } from "styled-components/native";
+import Animated, { LightSpeedInLeft } from "react-native-reanimated";
 
-const Container = styled(View)`
+const Container = styled(Animated.View)`
   flex-direction: row;
 `;
 
@@ -39,7 +40,7 @@ const Name = styled(Text)`
 export function HomeTopBar() {
   const theme = useTheme();
   return (
-    <Container>
+    <Container entering={LightSpeedInLeft}>
       <Column alignLeft>
         <GreetingContainer>
           <IconComponent

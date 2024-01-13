@@ -13,22 +13,10 @@ const ToggleBalanceIcon = styled(TouchableOpacity)`
 export function HomeTogglerBalanceInfo({ toggleBalance, handleHideBalance }) {
   const theme = useTheme();
 
-  if (toggleBalance === true) {
-    return (
-      <ToggleBalanceIcon onPress={handleHideBalance}>
-        <IconComponent
-          name="eye"
-          size={scale(20)}
-          color={theme.background.primary}
-        />
-      </ToggleBalanceIcon>
-    );
-  }
-
   return (
     <ToggleBalanceIcon onPress={handleHideBalance}>
       <IconComponent
-        name="eye-slash"
+        name={toggleBalance ? "eye" : "eye-slash"}
         size={scale(20)}
         color={theme.background.primary}
       />

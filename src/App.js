@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { Provider } from "jotai";
 import { MainNavigator } from "./navigation";
 import { themeConfig } from "./services/theme/config";
+import { BottomSheetDrawer } from "./components/layouts/bottom-sheet-drawer";
 
 export default function App() {
   return (
@@ -10,6 +11,7 @@ export default function App() {
       <ThemeProvider theme={themeConfig["dark"]}>
         <StatusBar style="light" />
         <MainNavigator />
+        <BottomSheetDrawer />
       </ThemeProvider>
     </Provider>
   );

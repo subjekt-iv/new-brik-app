@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { HomeTopBar } from "../../components/organisms/home-top-bar";
-import { HomeBalanceCard } from "../../components/organisms/home-balance-card";
+import { HomeBalanceCard } from "../../components/layouts/home-balance-card";
 
-function HomeScreen({ navigation }) {
+function HomeScreen() {
   return (
     <SafeAreaContainer>
       <Container>

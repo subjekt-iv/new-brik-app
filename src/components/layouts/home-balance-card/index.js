@@ -5,6 +5,7 @@ import Card from "../../atoms/card";
 import { scale } from "react-native-size-matters";
 import { HomeTogglerBalanceInfo } from "../../molecules/home-toggle-balance-info";
 import { HomeBalanceInfo } from "../../molecules/home-balance-info";
+import { HomeOperationsButton } from "../../organisms/home-operations-button-card";
 
 const Container = styled(View)`
   flex-direction: column;
@@ -33,9 +34,13 @@ const CardBodyRow = styled(View)`
 `;
 
 const CardBodyColumn = styled(View)`
-  flex: ${({ small }) => (small ? 0.5 : 1)};
+  flex: ${({ small }) => (small ? 0.3 : 1)};
   flex-direction: column;
-  align-items: ${({ alignLeft }) => (alignLeft ? "flex-start" : "flex-end")};
+  align-items: ${({ alignLeft, alignCenter }) => {
+    if (alignLeft) return "flex-start";
+    if (alignCenter) return "center";
+    return "flex-end";
+  }};
 `;
 
 export function HomeBalanceCard() {
@@ -62,6 +67,9 @@ export function HomeBalanceCard() {
                 />
               </CardBodyColumn>
             </CardBodyRow>
+            <CardBodyColumn alignCenter>
+              <HomeOperationsButton />
+            </CardBodyColumn>
           </CardBody>
         </Card>
       </Column>
