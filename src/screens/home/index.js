@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import Button from "../../components/atoms/button";
+import Button from "@components/atoms/button";
 import { useAtom } from "jotai";
-import { tokenAtom } from "../../services/store/user";
+import { tokenAtom } from "@services/store/user";
 
 function HomeScreen({ navigation }) {
   const [token, setToken] = useAtom(tokenAtom);

@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { useAtom } from "jotai";
-import { tokenAtom } from "../../services/store/user";
-import Button from "../../components/atoms/button";
-import Input from "../../components/atoms/input";
-import Logo from "../../components/atoms/logo";
+import { tokenAtom } from "@services/store/user";
+import Button from "@components/atoms/button";
+import Input from "@components/atoms/input";
+import Logo from "@components/atoms/logo";
 
 function OnBoardingScreen() {
   const [token, setToken] = useAtom(tokenAtom);

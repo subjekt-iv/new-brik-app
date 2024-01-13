@@ -1,5 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import OnBoardingScreen from "../../../screens/on-boarding";
+import OnBoardingScreen from "@screens/on-boarding";
 
 const Stack = createStackNavigator();
 
