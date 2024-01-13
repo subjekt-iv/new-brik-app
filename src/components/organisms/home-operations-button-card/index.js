@@ -1,8 +1,8 @@
 import { View } from "react-native";
 import styled from "styled-components/native";
-import { ButtonIconSquare } from "../../molecules/button-icon-square";
+import { ButtonIconSquare } from "@components/molecules/button-icon-square";
 import { useAtom } from "jotai";
-import { openBottomSheetAtom } from "../../../services/store/bottom-sheet";
+import { openBottomSheetAtom } from "@services/store/bottom-sheet";
 
 const Container = styled(View)`
   flex: 1;

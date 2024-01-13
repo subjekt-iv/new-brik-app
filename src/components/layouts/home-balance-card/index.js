@@ -1,11 +1,11 @@
 import styled from "styled-components/native";
 import { useState } from "react";
 import { View } from "react-native";
-import Card from "../../atoms/card";
+import Card from "@components/atoms/card";
 import { scale } from "react-native-size-matters";
-import { HomeTogglerBalanceInfo } from "../../molecules/home-toggle-balance-info";
-import { HomeBalanceInfo } from "../../molecules/home-balance-info";
-import { HomeOperationsButton } from "../../organisms/home-operations-button-card";
+import { HomeTogglerBalanceInfo } from "@components/molecules/home-toggle-balance-info";
+import { HomeBalanceInfo } from "@components/molecules/home-balance-info";
+import { HomeOperationsButton } from "@components/organisms/home-operations-button-card";
 
 const Container = styled(View)`
   flex-direction: column;

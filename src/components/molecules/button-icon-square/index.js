@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components/native";
 import { useTheme } from "styled-components/native";
-import IconComponent from "../../atoms/icon";
+import IconComponent from "@components/atoms/icon";
 import { scale, verticalScale } from "react-native-size-matters";
 
 const ButtonContainer = styled.View`
