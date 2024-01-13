@@ -1,9 +1,10 @@
 import styled from "styled-components/native";
+import { useState } from "react";
 import { View } from "react-native";
-import { useTheme } from "styled-components/native";
 import Card from "../../atoms/card";
 import { scale } from "react-native-size-matters";
-import IconComponent from "../../atoms/icon";
+import { HomeTogglerBalanceInfo } from "../../molecules/home-toggle-balance-info";
+import { HomeBalanceInfo } from "../../molecules/home-balance-info";
 
 const Container = styled(View)`
   flex-direction: column;
@@ -15,11 +16,6 @@ const Container = styled(View)`
 const Text = styled.Text`
   font-size: ${scale(14)}px;
   color: ${({ theme }) => theme.text.primary};
-`;
-
-const TextBalance = styled(Text)`
-  font-size: ${scale(24)}px;
-  font-weight: bold;
 `;
 
 const Column = styled(View)`
@@ -42,12 +38,12 @@ const CardBodyColumn = styled(View)`
   align-items: ${({ alignLeft }) => (alignLeft ? "flex-start" : "flex-end")};
 `;
 
-const CurrencyIcon = styled(IconComponent)`
-  color: ${({ theme }) => theme.background.primary};
-`;
-
 export function HomeBalanceCard() {
-  const theme = useTheme();
+  const [hideBalance, setHideBalance] = useState(true);
+
+  const handleHideBalance = () => {
+    setHideBalance(!hideBalance);
+  };
 
   return (
     <Container>
@@ -56,15 +52,13 @@ export function HomeBalanceCard() {
           <CardBody>
             <CardBodyRow>
               <CardBodyColumn alignLeft>
-                <Text>Balance</Text>
-                <TextBalance numberOfLines={1}>$ 120.000,56</TextBalance>
+                <HomeBalanceInfo toggleBalance={hideBalance} />
               </CardBodyColumn>
-              <CardBodyColumn alignRight small>
+              <CardBodyColumn alignRight small marginTop>
                 <Text>ARS</Text>
-                <CurrencyIcon
-                  name="eye"
-                  size={scale(24)}
-                  color={theme.background.primary}
+                <HomeTogglerBalanceInfo
+                  toggleBalance={hideBalance}
+                  handleHideBalance={handleHideBalance}
                 />
               </CardBodyColumn>
             </CardBodyRow>

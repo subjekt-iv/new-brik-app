@@ -1,13 +1,8 @@
 import styled from "styled-components";
-import Button from "../../components/atoms/button";
-import { useAtom } from "jotai";
-import { tokenAtom } from "../../services/store/user";
-import { HomeTopBar } from "../../components/molecules/home-top-bar";
-import { HomeBalanceCard } from "../../components/molecules/home-balance-card";
+import { HomeTopBar } from "../../components/organisms/home-top-bar";
+import { HomeBalanceCard } from "../../components/organisms/home-balance-card";
 
 function HomeScreen({ navigation }) {
-  const [token, setToken] = useAtom(tokenAtom);
-
   return (
     <SafeAreaContainer>
       <Container>

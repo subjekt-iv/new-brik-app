@@ -1,8 +1,8 @@
-import React from "react";
 import styled from "styled-components/native";
-import { View, Text } from "react-native";
+import Animated from "react-native-reanimated";
+import { FadeInUp } from "react-native-reanimated";
 
-const CardContainer = styled.View`
+const CardContainer = styled(Animated.View)`
   flex: 1;
   background-color: ${({ theme }) => theme.background.balance};
   border-radius: 16px;
@@ -15,7 +15,7 @@ const CardContainer = styled.View`
 `;
 
 const Card = ({ children }) => {
-  return <CardContainer>{children}</CardContainer>;
+  return <CardContainer entering={FadeInUp}>{children}</CardContainer>;
 };
 
 export default Card;
