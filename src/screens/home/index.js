@@ -3,17 +3,15 @@ import Button from "@components/atoms/button";
 import { useAtom } from "jotai";
 import { tokenAtom } from "@services/store/user";
 
-function HomeScreen({ navigation }) {
-  const [token, setToken] = useAtom(tokenAtom);
+import { HomeTopBar } from "@components/organisms/home-top-bar";
+import { HomeBalanceCard } from "@components/layouts/home-balance-card";
 
-  const handleOnPress = () => {
-    setToken(null);
-  };
-
+function HomeScreen() {
   return (
     <SafeAreaContainer>
       <Container>
-        <Button onPress={handleOnPress} title="Go to on-boarding" />
+        <HomeTopBar />
+        <HomeBalanceCard />
       </Container>
     </SafeAreaContainer>
   );
@@ -27,7 +25,6 @@ const SafeAreaContainer = styled.SafeAreaView`
 const Container = styled.View`
   flex: 1;
   align-items: center;
-  justify-content: center;
 `;
 
 export default HomeScreen;
