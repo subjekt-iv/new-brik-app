@@ -1,43 +1,41 @@
-import BottomSheet from "react-native-simple-bottom-sheet";
-import { Text, View, TouchableOpacity } from "react-native";
-import { useEffect, useRef } from "react";
+import BottomSheet from "@gorhom/bottom-sheet";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useAtom } from "jotai";
 import { openBottomSheetAtom } from "@services/store/bottom-sheet";
+import { bottomSheetConfigAtom } from "@services/store/bottom-sheet";
 
 export function BottomSheetDrawer() {
   const [openBottomSheet, setOpenBottomSheet] = useAtom(openBottomSheetAtom);
-  const panelRef = useRef(null);
+  const [bottomSheetConfig, setBottomSheetConfig] = useAtom(
+    bottomSheetConfigAtom
+  );
+  const snapPoints = useMemo(() => ["25%", "50%"], []);
+  const bottomSheetRef = useRef(null);
+  const handleSheetChanges = useCallback((index) => {
+    if (index === -1) {
+      setOpenBottomSheet(false);
+      setBottomSheetConfig({
+        title: "",
+        subTitle: "",
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (openBottomSheet === true) {
-      panelRef.current?.togglePanel();
+      bottomSheetRef.current?.expand();
+    } else {
+      bottomSheetRef.current?.close();
     }
-  }, [openBottomSheet]);
-
-  const handleCloseBottomSheet = () => {
-    setOpenBottomSheet(false);
-    panelRef.current?.togglePanel();
-  };
+  }, [openBottomSheet, setOpenBottomSheet]);
 
   return (
     <BottomSheet
-      isOpen={false}
-      sliderMinHeight={0}
-      ref={(ref) => (panelRef.current = ref)}
-    >
-      <View
-        style={{
-          flex: 1,
-          height: 400,
-          backgroundColor: "#fff",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <TouchableOpacity onPress={handleCloseBottomSheet}>
-          <Text>Close</Text>
-        </TouchableOpacity>
-      </View>
-    </BottomSheet>
+      index={-1}
+      snapPoints={snapPoints}
+      ref={bottomSheetRef}
+      onChange={handleSheetChanges}
+      enablePanDownToClose={true}
+    ></BottomSheet>
   );
 }
