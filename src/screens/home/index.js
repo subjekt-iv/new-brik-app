@@ -1,6 +1,10 @@
 import styled from "styled-components";
-import { HomeTopBar } from "../../components/organisms/home-top-bar";
-import { HomeBalanceCard } from "../../components/layouts/home-balance-card";
+import Button from "@components/atoms/button";
+import { useAtom } from "jotai";
+import { tokenAtom } from "@services/store/user";
+
+import { HomeTopBar } from "@components/organisms/home-top-bar";
+import { HomeBalanceCard } from "@components/layouts/home-balance-card";
 
 function HomeScreen() {
   return (

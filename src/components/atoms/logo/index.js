@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import LogoMin from "../../../assets/svg/logo-min.svg";
+import LogoMin from "@assets/svg/logo-min.svg";
 
 const Container = styled.View`
   /* Add your styles here */
