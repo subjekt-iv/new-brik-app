@@ -15,12 +15,16 @@ export function BottomSheetDrawer() {
   }, [openBottomSheet]);
 
   const handleCloseBottomSheet = () => {
-    panelRef.current?.togglePanel();
     setOpenBottomSheet(false);
+    panelRef.current?.togglePanel();
   };
 
   return (
-    <BottomSheet sliderMinHeight={0} ref={(ref) => (panelRef.current = ref)}>
+    <BottomSheet
+      isOpen={false}
+      sliderMinHeight={0}
+      ref={(ref) => (panelRef.current = ref)}
+    >
       <View
         style={{
           flex: 1,
