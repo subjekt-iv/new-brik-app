@@ -1,8 +1,7 @@
 import styled from "styled-components/native";
-import { useAtom } from "jotai";
-import { bottomSheetConfigAtom } from "@services/store/bottom-sheet";
 import { moderateScale } from "react-native-size-matters";
 import { BottomSheetCurrencyList } from "@components/organisms/bottom-sheet-currency-list";
+import { useBearStore } from "@services/store";
 
 const Container = styled.View`
   flex: 1;
@@ -23,9 +22,7 @@ const Subtitle = styled.Text`
 `;
 
 export function BottomSheetScreen() {
-  const [bottomSheetConfig, setBottomSheetConfig] = useAtom(
-    bottomSheetConfigAtom
-  );
+  const { bottomSheetConfig } = useBearStore();
   return (
     <Container>
       <Title>{bottomSheetConfig.title}</Title>
