@@ -1,11 +1,7 @@
 import { View } from "react-native";
 import styled from "styled-components/native";
 import { ButtonIconSquare } from "@components/molecules/button-icon-square";
-import { useAtom } from "jotai";
-import {
-  openBottomSheetAtom,
-  bottomSheetConfigAtom,
-} from "@services/store/bottom-sheet";
+import { useBearStore } from "@services/store";
 
 const Container = styled(View)`
   flex: 1;
@@ -17,10 +13,7 @@ const Container = styled(View)`
 `;
 
 export function HomeOperationsButton() {
-  const [openBottomSheet, setOpenBottomSheet] = useAtom(openBottomSheetAtom);
-  const [bottomSheetConfig, setBottomSheetConfig] = useAtom(
-    bottomSheetConfigAtom
-  );
+  const { setOpenBottomSheet, setBottomSheetConfig } = useBearStore();
 
   const handleSendAction = () => {
     setOpenBottomSheet(true);
