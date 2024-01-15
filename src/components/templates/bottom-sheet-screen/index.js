@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import styled from "styled-components/native";
 import { moderateScale } from "react-native-size-matters";
 import { BottomSheetCurrencyList } from "@components/organisms/bottom-sheet-currency-list";
@@ -23,11 +24,15 @@ const Subtitle = styled.Text`
 
 export function BottomSheetScreen() {
   const { bottomSheetConfig } = useBearStore();
-  return (
-    <Container>
-      <Title>{bottomSheetConfig.title}</Title>
-      <Subtitle>{bottomSheetConfig.subTitle}</Subtitle>
-      <BottomSheetCurrencyList />
-    </Container>
-  );
+
+  const renderContent = useMemo(() => {
+    return (
+      <Container>
+        <Title>{bottomSheetConfig.title}</Title>
+        <Subtitle>{bottomSheetConfig.subTitle}</Subtitle>
+        <BottomSheetCurrencyList currencies={bottomSheetConfig.currencies} />
+      </Container>
+    );
+  }, [bottomSheetConfig]);
+  return renderContent;
 }
