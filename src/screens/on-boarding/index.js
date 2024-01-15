@@ -8,8 +8,10 @@ import Logo from "@components/atoms/logo";
 function OnBoardingScreen() {
   const { token, isLogged, setToken, onInitialize } = useBearStore();
 
-  const handleOnPress = () => {
-    setToken("token");
+  console.log("token", token);
+
+  const handleOnPress = async () => {
+    await setToken("token");
   };
 
   return (
