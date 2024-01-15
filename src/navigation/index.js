@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-// import { useAtom } from "jotai";
-// import { loadableIsLoggedAtom } from "@services/store/modules/user";
 import { OnBoardingStack } from "./stacks/on-boarding";
 import { navigationRef } from "@services/router";
 import { HomeStack } from "./stacks/home";
@@ -70,8 +68,6 @@ function Home() {
 
 export function MainNavigator() {
   const { token, isLogged, setToken, onInitialize } = useBearStore();
-  console.log(isLogged);
-  // const [isLogged] = useAtom(loadableIsLoggedAtom);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -86,7 +82,7 @@ export function MainNavigator() {
 
   return (
     <NavigationContainer ref={navigationRef}>
-      {isLogged?.data ? <Home /> : <OnBoarding />}
+      {isLogged ? <Home /> : <OnBoarding />}
     </NavigationContainer>
   );
 }
