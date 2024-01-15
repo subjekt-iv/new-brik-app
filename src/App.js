@@ -1,21 +1,20 @@
 import { ThemeProvider } from "styled-components";
 import { StatusBar } from "expo-status-bar";
-import { Provider } from "jotai";
 import { MainNavigator } from "./navigation";
-import { themeConfig } from "./services/theme/config";
-import { BottomSheetDrawer } from "./components/layouts/bottom-sheet-drawer";
+import { BottomSheetDrawer } from "@components/templates/bottom-sheet-drawer";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useBearStore } from "@services/store";
 
 export default function App() {
+  const theme = useBearStore((state) => state.theme);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <Provider>
-        <ThemeProvider theme={themeConfig["dark"]}>
-          <StatusBar style="light" />
-          <MainNavigator />
-          <BottomSheetDrawer />
-        </ThemeProvider>
-      </Provider>
+      <ThemeProvider theme={theme}>
+        <StatusBar style="light" />
+        <MainNavigator />
+        <BottomSheetDrawer />
+      </ThemeProvider>
     </GestureHandlerRootView>
   );
 }

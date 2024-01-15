@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { useAtom } from "jotai";
-import { loadableIsLoggedAtom } from "../services/store/user";
 import { OnBoardingStack } from "./stacks/on-boarding";
-import { navigationRef } from "../services/router";
+import { navigationRef } from "@services/router";
 import { HomeStack } from "./stacks/home";
-import IconComponent from "../components/atoms/icon";
+import IconComponent from "@components/atoms/icon";
 import { useTheme } from "styled-components/native";
+import { useBearStore } from "@services/store";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -35,7 +34,6 @@ function Home() {
         headerShown: false,
         tabBarIcon: ({ focused, size }) => {
           let iconName;
-
           if (route.name === "HomeStack") {
             iconName = "home";
           } else if (route.name === "WalletStack") {
@@ -43,7 +41,6 @@ function Home() {
           } else if (route.name === "CardStack") {
             iconName = "credit-card";
           }
-
           return (
             <IconComponent
               name={iconName}
@@ -70,13 +67,13 @@ function Home() {
 }
 
 export function MainNavigator() {
-  const [isLogged] = useAtom(loadableIsLoggedAtom);
+  const { token, isLogged, setToken, onInitialize } = useBearStore();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     isLogged.state !== "loading" && setLoading(false);
-    isLogged.data && navigationRef.current?.navigate("HomeStack");
-    !isLogged.data && navigationRef.current?.navigate("OnBoardingStack");
+    isLogged && navigationRef.current?.navigate("HomeStack");
+    !isLogged && navigationRef.current?.navigate("OnBoardingStack");
   }, [isLogged]);
 
   if (loading) {
@@ -85,7 +82,7 @@ export function MainNavigator() {
 
   return (
     <NavigationContainer ref={navigationRef}>
-      {isLogged?.data ? <Home /> : <OnBoarding />}
+      {isLogged ? <Home /> : <OnBoarding />}
     </NavigationContainer>
   );
 }

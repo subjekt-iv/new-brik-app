@@ -1,15 +1,17 @@
 import styled from "styled-components";
-import { useAtom } from "jotai";
-import { tokenAtom } from "@services/store/user";
+import { useBearStore } from "@services/store";
+
 import Button from "@components/atoms/button";
 import Input from "@components/atoms/input";
 import Logo from "@components/atoms/logo";
 
 function OnBoardingScreen() {
-  const [token, setToken] = useAtom(tokenAtom);
+  const { token, isLogged, setToken, onInitialize } = useBearStore();
 
-  const handleOnPress = () => {
-    setToken("token");
+  console.log("token", token);
+
+  const handleOnPress = async () => {
+    await setToken("token");
   };
 
   return (

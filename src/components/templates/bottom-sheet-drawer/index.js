@@ -1,26 +1,26 @@
-import { View } from "react-native";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { useCallback, useEffect, useMemo, useRef } from "react";
-import { useAtom } from "jotai";
-import {
-  openBottomSheetAtom,
-  bottomSheetConfigAtom,
-} from "@services/store/bottom-sheet";
 import { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import { useTheme } from "styled-components/native";
+import { BottomSheetScreen } from "@components/templates/bottom-sheet-screen";
+import { useBearStore } from "@services/store";
 
 export function BottomSheetDrawer() {
   const theme = useTheme();
-  const [openBottomSheet, setOpenBottomSheet] = useAtom(openBottomSheetAtom);
-  const [bottomSheetConfig, setBottomSheetConfig] = useAtom(
-    bottomSheetConfigAtom
-  );
-  const snapPoints = useMemo(() => ["25%", "50%"], []);
+  const {
+    openBottomSheet,
+    bottomSheetConfig,
+    setOpenBottomSheet,
+    setBottomSheetConfig,
+  } = useBearStore();
+
+  const snapPoints = useMemo(() => ["20%", "60%"], []);
   const bottomSheetRef = useRef(null);
   const handleSheetChanges = useCallback((index) => {
     if (index === -1) {
       setOpenBottomSheet(false);
       setBottomSheetConfig({
+        type: "",
         title: "",
         subTitle: "",
       });
@@ -58,6 +58,12 @@ export function BottomSheetDrawer() {
       backgroundStyle={{
         backgroundColor: theme.background.app,
       }}
-    ></BottomSheet>
+    >
+      <BottomSheetScreen
+        type={bottomSheetConfig.type}
+        title={bottomSheetConfig.title}
+        subTitle={bottomSheetConfig.subTitle}
+      />
+    </BottomSheet>
   );
 }
