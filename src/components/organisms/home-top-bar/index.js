@@ -1,10 +1,11 @@
 import styled from "styled-components/native";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { scale } from "react-native-size-matters";
 import IconComponent from "@components/atoms/icon";
 import { useTheme } from "styled-components/native";
 import Animated, { LightSpeedInLeft } from "react-native-reanimated";
 import { useBearStore } from "@services/store";
+import { Text } from "@components/atoms/text";
 
 const Container = styled(Animated.View)`
   flex-direction: row;

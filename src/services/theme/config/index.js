@@ -66,4 +66,9 @@ export const themeConfig = {
     },
   },
   light: {},
+  fontFamily: {
+    regular: "IBMPlexSans-Regular",
+    medium: "IBMPlexSans-Medium",
+    bold: "IBMPlexSans-Bold",
+  },
 };

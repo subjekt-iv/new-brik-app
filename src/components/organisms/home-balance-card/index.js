@@ -6,6 +6,7 @@ import { scale } from "react-native-size-matters";
 import { HomeTogglerBalanceInfo } from "@components/molecules/home-toggle-balance-info";
 import { HomeBalanceInfo } from "@components/molecules/home-balance-info";
 import { HomeOperationsButton } from "@components/organisms/home-operations-button-card";
+import { Text } from "@components/atoms/text";
 
 const Container = styled(View)`
   flex-direction: column;
@@ -14,7 +15,7 @@ const Container = styled(View)`
   height: ${scale(160)}px;
 `;
 
-const Text = styled.Text`
+const TextComponent = styled(Text)`
   font-size: ${scale(14)}px;
   color: ${({ theme }) => theme.text.primary};
 `;
@@ -60,7 +61,7 @@ export function HomeBalanceCard() {
                 <HomeBalanceInfo toggleBalance={hideBalance} />
               </CardBodyColumn>
               <CardBodyColumn alignRight small marginTop>
-                <Text>ARS</Text>
+                <TextComponent>ARS</TextComponent>
                 <HomeTogglerBalanceInfo
                   toggleBalance={hideBalance}
                   handleHideBalance={handleHideBalance}

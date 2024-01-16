@@ -1,5 +1,6 @@
 import { Pressable } from "react-native";
 import styled from "styled-components/native";
+import { Text } from "@components/atoms/text";
 
 const getButtonProperty = (theme, size, property) => {
   const sizes = theme.button[size] || theme.button.l;
@@ -23,7 +24,7 @@ const ButtonContainer = styled(Pressable)`
   justify-content: center;
 `;
 
-const ButtonText = styled.Text`
+const ButtonText = styled(Text)`
   color: ${({ theme }) => theme.text.primary};
   font-size: 13px;
   font-weight: 600;
