@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useBearStore } from "@services/store";
 
 import Button from "@components/atoms/button";
-import { Carrousel } from "@components/organisms/onboarding-carrousel";
+import Carrousel from "@components/organisms/onboarding-carrousel";
 import { useGuestCoreApi } from "@services/api/useGuestCoreApi";
 import { guestCoreResources } from "@services/api/useGuestCoreApi/collection";
 
@@ -48,10 +48,5 @@ const Container = styled.View`
   display: flex;
   align-items: center;
 `;
-// const CenteredView = styled.View`
-//   align-items: flex-end;
-//   justify-content: center;
-//   flex: 1;
-// `;
 
 export default OnBoardingScreen;
