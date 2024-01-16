@@ -38,7 +38,7 @@ const Button = ({ onPress, title, disabled, bordered, size = "l" }) => {
       bordered={bordered}
       size={size}
     >
-      <ButtonText>{title}</ButtonText>
+      <ButtonText bold>{title}</ButtonText>
     </ButtonContainer>
   );
 };
