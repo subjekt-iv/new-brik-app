@@ -1,27 +1,24 @@
 import styled from "styled-components/native";
-import { View } from "react-native";
+import { FlatList, View } from "react-native";
 import { BottomSheetCurrencyItem } from "@components/molecules/bottom-sheet-currency-item";
 import { moderateScale } from "react-native-size-matters";
 
-const Container = styled(View)`
-  flex-direction: column;
-  margin-top: ${moderateScale(20)}px;
-`;
-
-const Column = styled(View)`
+const CurrencyList = styled(FlatList)`
   flex: 1;
-  flex-direction: column;
-  gap: ${moderateScale(12)}px;
+  margin-top: ${moderateScale(12)}px;
 `;
 
-export function BottomSheetCurrencyList() {
+const Separator = styled(View)`
+  height: ${moderateScale(12)}px;
+`;
+
+export function BottomSheetCurrencyList({ currencies = [] }) {
   return (
-    <Container>
-      <Column>
-        <BottomSheetCurrencyItem />
-        <BottomSheetCurrencyItem />
-        <BottomSheetCurrencyItem />
-      </Column>
-    </Container>
+    <CurrencyList
+      data={currencies}
+      renderItem={({ item }) => <BottomSheetCurrencyItem currency={item} />}
+      keyExtractor={(item) => item.id}
+      ItemSeparatorComponent={() => <Separator />}
+    />
   );
 }

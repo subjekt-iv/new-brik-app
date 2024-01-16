@@ -1,25 +1,38 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 import { useBearStore } from "@services/store";
 
 import Button from "@components/atoms/button";
-import Input from "@components/atoms/input";
-import Logo from "@components/atoms/logo";
+import Carrousel from "@components/organisms/onboarding-carrousel";
+import { useGuestCoreApi } from "@services/api/useGuestCoreApi";
+import { guestCoreResources } from "@services/api/useGuestCoreApi/collection";
 
 function OnBoardingScreen() {
-  const { token, isLogged, setToken, onInitialize } = useBearStore();
-
-  console.log("token", token);
+  const { token, setToken } = useBearStore();
+  const { data, loading, error, postData } = useGuestCoreApi(
+    guestCoreResources.Login
+  );
 
   const handleOnPress = async () => {
-    await setToken("token");
+    const payload = {}; // put your user here
+    await postData(payload);
   };
+
+  useEffect(() => {
+    if (data) {
+      setToken(data.access_token);
+    }
+  }, [data]);
 
   return (
     <SafeAreaContainer>
       <Container>
-        <Logo />
-        <Button onPress={handleOnPress} title="Registrarse" />
-        <Input placeholder="Correo electrónico" />
+        {/* <CenteredView> */}
+        <Carrousel />
+        {/* </CenteredView> */}
+
+        {/* <Input placeholder="Correo electrónico" /> */}
+        <Button onPress={handleOnPress} title="Siguiente" />
       </Container>
     </SafeAreaContainer>
   );
@@ -32,8 +45,8 @@ const SafeAreaContainer = styled.SafeAreaView`
 
 const Container = styled.View`
   flex: 1;
+  display: flex;
   align-items: center;
-  justify-content: center;
 `;
 
 export default OnBoardingScreen;
