@@ -10,6 +10,7 @@ export const useCoreApi = (path) => {
   const [error, setError] = useState(null);
 
   const api = useMemo(() => {
+    if (!token) return null;
     return axios.create({
       baseURL: API_CORE_URL,
       headers: {

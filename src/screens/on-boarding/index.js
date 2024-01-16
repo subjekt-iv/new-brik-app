@@ -8,7 +8,7 @@ import { useGuestCoreApi } from "@services/api/useGuestCoreApi";
 import { guestCoreResources } from "@services/api/useGuestCoreApi/collection";
 
 function OnBoardingScreen() {
-  const { token, setToken } = useBearStore();
+  const { setToken } = useBearStore();
   const { data, loading, error, postData } = useGuestCoreApi(
     guestCoreResources.Login
   );
