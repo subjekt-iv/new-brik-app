@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { OnBoardingStack } from "./stacks/on-boarding";
+import { LoginStack } from "./stacks/login";
 import { navigationRef } from "@services/router";
 import { HomeStack } from "./stacks/home";
 import IconComponent from "@components/atoms/icon";
@@ -18,6 +19,19 @@ function OnBoarding() {
       <Stack.Screen
         name="OnBoardingStack"
         component={OnBoardingStack}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+function Login() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="LoginStack"
+        component={LoginStack}
         options={{
           headerShown: false,
         }}
