@@ -7,7 +7,7 @@ export const createAuthStore = (set, get) => ({
     await setItem("token", token);
     set({
       token,
-      isLogged: true,
+      isLogged: !!token,
     });
   },
   removeToken: async () => {
