@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import styled from "styled-components";
 import { useBearStore } from "@services/store";
-
 import Button from "@components/atoms/button";
 import Carrousel from "@components/organisms/onboarding-carrousel";
 import { useGuestCoreApi } from "@services/api/useGuestCoreApi";
@@ -14,10 +13,7 @@ function OnBoardingScreen() {
   );
 
   const handleOnPress = async () => {
-    const payload = {
-      email: "cirob_100@hotmail.com",
-      password: "Kenay100",
-    }; // put your user here
+    const payload = {}; // put your user here
     await postData(payload);
   };
 

@@ -8,13 +8,16 @@ const InputContainer = styled.View`
   background-color: ${({ theme }) => theme.background.textField};
   border-radius: 10px;
   border: none;
-  width: ${({ theme, size }) => getInputSize(theme, size).width}px;
+  width: ${({ theme, size, width }) =>
+    width ? width : getInputSize(theme, size).width}px;
+  height: ${({ height }) => (height ? `${height}px` : "auto")};
 `;
 
 const StyledInput = styled(TextInput).attrs(({ theme }) => ({
   placeholderTextColor: theme.text.secondary,
 }))`
-  height: ${({ theme, size }) => getInputSize(theme, size).height}px;
+  height: ${({ theme, size, height }) =>
+    height ? `${height}px` : `${getInputSize(theme, size).height}px`};
   border-width: 1px;
   border-color: #ccc;
   padding: ${moderateScale(10)}px;
@@ -22,9 +25,9 @@ const StyledInput = styled(TextInput).attrs(({ theme }) => ({
   border: none;
 `;
 
-const Input = ({ ...props }) => {
+const Input = ({ width, ...props }) => {
   return (
-    <InputContainer>
+    <InputContainer width={width}>
       <StyledInput {...props} />
     </InputContainer>
   );

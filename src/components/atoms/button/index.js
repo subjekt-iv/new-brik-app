@@ -1,5 +1,6 @@
 import { ActivityIndicator, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
+import { Pressable } from "react-native";
 import { Text } from "@components/atoms/text";
 
 const getButtonProperty = (theme, size, property) => {
@@ -12,11 +13,12 @@ const ButtonContainer = styled(TouchableOpacity)`
     disabled
       ? theme.background.buttonNotSelected
       : bordered
-      ? theme.background.buttonBordered
+      ? "#1c1c1c"
       : theme.background.primary};
   border: ${({ theme, bordered }) =>
     bordered ? `2px solid ${theme.background.primary}` : "none"};
-  width: ${({ theme, size }) => getButtonProperty(theme, size, "width")}px;
+  width: ${({ theme, size, width }) =>
+    width || getButtonProperty(theme, size, "width")}px;
   height: ${({ theme, size }) => getButtonProperty(theme, size, "height")}px;
   border-radius: ${({ theme, size }) =>
     getButtonProperty(theme, size, "borderRadius")}px;
@@ -37,6 +39,7 @@ const Button = ({
   bordered,
   loading,
   size = "l",
+  width,
 }) => {
   return (
     <ButtonContainer
@@ -44,6 +47,7 @@ const Button = ({
       disabled={disabled || loading}
       bordered={bordered}
       size={size}
+      width={width}
     >
       {loading ? (
         <ButtonText>
