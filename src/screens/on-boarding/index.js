@@ -48,10 +48,5 @@ const Container = styled.View`
   display: flex;
   align-items: center;
 `;
-// const CenteredView = styled.View`
-//   align-items: flex-end;
-//   justify-content: center;
-//   flex: 1;
-// `;
 
 export default OnBoardingScreen;
