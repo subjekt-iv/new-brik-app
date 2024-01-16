@@ -79,7 +79,7 @@ export function HomeOperationsButton() {
       />
       <ButtonIconSquare
         iconName="arrow-down"
-        label="Ingresa"
+        label="Ingresar"
         onPress={handleDepositAction}
       />
       <ButtonIconSquare

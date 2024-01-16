@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { View } from "react-native";
 import Card from "@components/atoms/card";
 import { scale } from "react-native-size-matters";
@@ -44,12 +44,27 @@ const CardBodyColumn = styled(View)`
   }};
 `;
 
-export function HomeBalanceCard() {
+export function HomeBalanceCard({ data }) {
   const [hideBalance, setHideBalance] = useState(true);
+  const [wallet, setWallet] = useState();
+  const [currencySelected, setCurrencySelected] = useState(1);
+
+  useEffect(() => {
+    if (data) {
+      const wallet = data.find(
+        (wallet) => wallet.currency === currencySelected
+      );
+      setWallet(wallet);
+    }
+  }, [data, currencySelected]);
 
   const handleHideBalance = () => {
     setHideBalance(!hideBalance);
   };
+
+  const renderHomeBalanceCard = useMemo(() => {
+    return <HomeBalanceCard data={data} />;
+  }, [data]);
 
   return (
     <Container>
@@ -58,7 +73,10 @@ export function HomeBalanceCard() {
           <CardBody>
             <CardBodyRow>
               <CardBodyColumn alignLeft>
-                <HomeBalanceInfo toggleBalance={hideBalance} />
+                <HomeBalanceInfo
+                  toggleBalance={hideBalance}
+                  balance={wallet?.balance}
+                />
               </CardBodyColumn>
               <CardBodyColumn alignRight small marginTop>
                 <TextComponent>ARS</TextComponent>

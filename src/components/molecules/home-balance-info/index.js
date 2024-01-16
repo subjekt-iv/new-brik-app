@@ -19,12 +19,12 @@ const TextBalance = styled(Text)`
   color: ${({ theme }) => theme.text.primary};
 `;
 
-export function HomeBalanceInfo({ toggleBalance }) {
+export function HomeBalanceInfo({ toggleBalance, balance }) {
   return (
     <BalanceInfo>
       <TextComponent>Balance</TextComponent>
       <TextBalance>
-        {toggleBalance === true ? "$ ******" : "$ 120.000,56"}
+        {toggleBalance === true ? "$ ******" : "$ " + balance}
       </TextBalance>
     </BalanceInfo>
   );

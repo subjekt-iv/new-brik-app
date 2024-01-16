@@ -17,6 +17,8 @@ export const useGuestCoreApi = (path) => {
       const response = await api.get(path);
       setData(response.data);
     } catch (error) {
+      console.log("error", JSON.stringify(error.response.data));
+
       setError(error);
     } finally {
       setLoading(false);
@@ -26,10 +28,8 @@ export const useGuestCoreApi = (path) => {
   const postData = async (postData) => {
     try {
       setLoading(true);
-      console.log("path", path);
-      console.log("postData", postData);
+
       const response = await api.post(path, postData);
-      console.log("response", response.data);
 
       setData(response.data);
     } catch (error) {
