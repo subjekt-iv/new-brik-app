@@ -14,7 +14,10 @@ function OnBoardingScreen() {
   );
 
   const handleOnPress = async () => {
-    const payload = {}; // put your user here
+    const payload = {
+      email: "cirob_100@hotmail.com",
+      password: "Kenay100",
+    }; // put your user here
     await postData(payload);
   };
 
@@ -32,7 +35,7 @@ function OnBoardingScreen() {
         {/* </CenteredView> */}
 
         {/* <Input placeholder="Correo electrónico" /> */}
-        <Button onPress={handleOnPress} title="Siguiente" />
+        <Button loading={loading} onPress={handleOnPress} title="Siguiente" />
       </Container>
     </SafeAreaContainer>
   );

@@ -1,4 +1,4 @@
-import { Pressable } from "react-native";
+import { ActivityIndicator, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import { Text } from "@components/atoms/text";
 
@@ -7,7 +7,7 @@ const getButtonProperty = (theme, size, property) => {
   return sizes[property];
 };
 
-const ButtonContainer = styled(Pressable)`
+const ButtonContainer = styled(TouchableOpacity)`
   background-color: ${({ theme, bordered, disabled }) =>
     disabled
       ? theme.background.buttonNotSelected
@@ -30,15 +30,28 @@ const ButtonText = styled(Text)`
   font-weight: 600;
 `;
 
-const Button = ({ onPress, title, disabled, bordered, size = "l" }) => {
+const Button = ({
+  onPress,
+  title,
+  disabled,
+  bordered,
+  loading,
+  size = "l",
+}) => {
   return (
     <ButtonContainer
       onPress={onPress}
-      disabled={disabled}
+      disabled={disabled || loading}
       bordered={bordered}
       size={size}
     >
-      <ButtonText bold>{title}</ButtonText>
+      {loading ? (
+        <ButtonText>
+          <ActivityIndicator />
+        </ButtonText>
+      ) : (
+        <ButtonText>{title}</ButtonText>
+      )}
     </ButtonContainer>
   );
 };
