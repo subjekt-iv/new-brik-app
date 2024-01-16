@@ -1,11 +1,10 @@
 import styled from "styled-components/native";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { scale } from "react-native-size-matters";
 import IconComponent from "@components/atoms/icon";
 import { useTheme } from "styled-components/native";
 import Animated, { LightSpeedInLeft } from "react-native-reanimated";
 import { useBearStore } from "@services/store";
-import { TouchableOpacity } from "react-native";
 
 const Container = styled(Animated.View)`
   flex-direction: row;
@@ -40,10 +39,11 @@ const Name = styled(Text)`
 `;
 
 export function HomeTopBar() {
-  const { removeToken } = useBearStore();
+  const { setToken } = useBearStore();
   const theme = useTheme();
-  const handleQRCodePress = () => {
-    removeToken();
+
+  const handleLogout = async () => {
+    await setToken(null);
   };
 
   return (
@@ -51,6 +51,7 @@ export function HomeTopBar() {
       <Column alignLeft>
         <GreetingContainer>
           <IconComponent
+            onPress={handleLogout}
             name="user-circle"
             size={scale(24)}
             color={theme.background.primary}
@@ -60,7 +61,7 @@ export function HomeTopBar() {
         </GreetingContainer>
       </Column>
       <Column>
-        <TouchableOpacity onPress={handleQRCodePress}>
+        <TouchableOpacity>
           <IconComponent
             name="qrcode"
             size={scale(24)}
