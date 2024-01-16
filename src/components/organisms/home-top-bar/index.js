@@ -4,6 +4,8 @@ import { scale } from "react-native-size-matters";
 import IconComponent from "@components/atoms/icon";
 import { useTheme } from "styled-components/native";
 import Animated, { LightSpeedInLeft } from "react-native-reanimated";
+import { useBearStore } from "@services/store";
+import { TouchableOpacity } from "react-native";
 
 const Container = styled(Animated.View)`
   flex-direction: row;
@@ -38,7 +40,12 @@ const Name = styled(Text)`
 `;
 
 export function HomeTopBar() {
+  const { removeToken } = useBearStore();
   const theme = useTheme();
+  const handleQRCodePress = () => {
+    removeToken();
+  };
+
   return (
     <Container entering={LightSpeedInLeft}>
       <Column alignLeft>
@@ -53,11 +60,13 @@ export function HomeTopBar() {
         </GreetingContainer>
       </Column>
       <Column>
-        <IconComponent
-          name="qrcode"
-          size={scale(24)}
-          color={theme.background.primary}
-        />
+        <TouchableOpacity onPress={handleQRCodePress}>
+          <IconComponent
+            name="qrcode"
+            size={scale(24)}
+            color={theme.background.primary}
+          />
+        </TouchableOpacity>
       </Column>
     </Container>
   );

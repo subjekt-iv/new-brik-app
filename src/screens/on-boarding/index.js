@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { useBearStore } from "@services/store";
-
 import Button from "@components/atoms/button";
 import Input from "@components/atoms/input";
 import Logo from "@components/atoms/logo";
+import Carrousel from "@components/organisms/onboarding-carrousel";
 
 function OnBoardingScreen() {
   const { token, isLogged, setToken, onInitialize } = useBearStore();
@@ -17,9 +17,12 @@ function OnBoardingScreen() {
   return (
     <SafeAreaContainer>
       <Container>
-        <Logo />
-        <Button onPress={handleOnPress} title="Registrarse" />
-        <Input placeholder="Correo electrónico" />
+        {/* <CenteredView> */}
+        <Carrousel />
+        {/* </CenteredView> */}
+
+        {/* <Input placeholder="Correo electrónico" /> */}
+        <Button onPress={handleOnPress} title="Siguiente" />
       </Container>
     </SafeAreaContainer>
   );
@@ -32,8 +35,13 @@ const SafeAreaContainer = styled.SafeAreaView`
 
 const Container = styled.View`
   flex: 1;
+  display: flex;
   align-items: center;
-  justify-content: center;
 `;
+// const CenteredView = styled.View`
+//   align-items: flex-end;
+//   justify-content: center;
+//   flex: 1;
+// `;
 
 export default OnBoardingScreen;
