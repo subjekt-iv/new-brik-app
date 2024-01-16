@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { OnBoardingStack } from "./stacks/on-boarding";
+import { navigate, navigationRef } from "@services/router";
 import { LoginStack } from "./stacks/login";
-import { navigationRef } from "@services/router";
 import { HomeStack } from "./stacks/home";
 import IconComponent from "@components/atoms/icon";
 import { useTheme } from "styled-components/native";
@@ -81,18 +81,13 @@ function Home() {
 }
 
 export function MainNavigator() {
-  const { token, isLogged, setToken, onInitialize } = useBearStore();
-  const [loading, setLoading] = useState(true);
+  const { isLogged } = useBearStore();
 
   useEffect(() => {
-    isLogged.state !== "loading" && setLoading(false);
-    isLogged && navigationRef.current?.navigate("HomeStack");
-    !isLogged && navigationRef.current?.navigate("OnBoardingStack");
+    isLogged && navigate("HomeStack");
+    !isLogged && navigate("OnBoardingStack");
+    console.log("MainNavigator -> isLogged", isLogged);
   }, [isLogged]);
-
-  if (loading) {
-    return null;
-  }
 
   return (
     <NavigationContainer ref={navigationRef}>
