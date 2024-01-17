@@ -11,7 +11,7 @@ import { Text } from "@components/atoms/text";
 
 function LoginScreen() {
   const { data, loading, postData } = useGuestCoreApi(guestCoreResources.Login);
-  const { setToken } = useBearStore();
+  const { setToken, setUser } = useBearStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -25,6 +25,8 @@ function LoginScreen() {
 
   useEffect(() => {
     if (data) {
+      console.log(JSON.stringify(data));
+      setUser(data.user);
       setToken(data.access_token);
     }
   }, [data]);
