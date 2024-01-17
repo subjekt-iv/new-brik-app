@@ -1,13 +1,14 @@
-import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { useBearStore } from "@services/store";
+import { scale, verticalScale } from "react-native-size-matters";
+import styled from "styled-components";
+
 import Button from "@components/atoms/button";
 import Logo from "@components/atoms/logo";
-import { scale, verticalScale } from "react-native-size-matters";
 import { InputTitle } from "@components/molecules/titled-input"; // Replace with the actual path
+import { Text } from "@components/atoms/text";
+import { useBearStore } from "@services/store";
 import { useGuestCoreApi } from "@services/api/useGuestCoreApi";
 import { guestCoreResources } from "@services/api/useGuestCoreApi/collection";
-import { Text } from "@components/atoms/text";
 
 function LoginScreen() {
   const { data, loading, postData } = useGuestCoreApi(guestCoreResources.Login);

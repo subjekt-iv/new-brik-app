@@ -40,11 +40,12 @@ const Name = styled(Text)`
 `;
 
 export function HomeTopBar() {
-  const { setToken } = useBearStore();
+  const { removeToken, removeUser, user } = useBearStore();
   const theme = useTheme();
 
   const handleLogout = async () => {
-    await setToken(null);
+    await removeToken();
+    await removeUser();
   };
 
   return (
@@ -58,7 +59,7 @@ export function HomeTopBar() {
             color={theme.background.primary}
           />
           <Greeting>Hola</Greeting>
-          <Name>Agustín</Name>
+          <Name>{user.legal.first_name}</Name>
         </GreetingContainer>
       </Column>
       <Column>
