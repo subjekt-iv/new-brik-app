@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components/native";
 import { View } from "react-native";
 import Card from "@components/atoms/card";
@@ -59,7 +59,7 @@ export function HomeBalanceCard({ data }) {
   const theme = useTheme();
   const [hideBalance, setHideBalance] = useState(false);
   const [wallet, setWallet] = useState();
-  const [currencySelected, setCurrencySelected] = useState(1);
+  const [currencySelected] = useState(1);
   const { setBottomSheetCurrencySelectConfig, openBottomSheet } =
     useBearStore();
 

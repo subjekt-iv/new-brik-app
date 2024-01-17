@@ -12,8 +12,8 @@ const ButtonContainer = styled(TouchableOpacity)`
     disabled
       ? theme.background.buttonNotSelected
       : bordered
-      ? "#1c1c1c"
-      : theme.background.primary};
+        ? "#1c1c1c"
+        : theme.background.primary};
   border: ${({ theme, bordered }) =>
     bordered ? `2px solid ${theme.background.primary}` : "none"};
   width: ${({ theme, size, width }) =>

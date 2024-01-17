@@ -1,6 +1,5 @@
-import BottomSheet from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import { useCallback, useEffect, useMemo, useRef } from "react";
-import { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import { useTheme } from "styled-components/native";
 import { BottomSheetScreen } from "@components/templates/bottom-sheet-screen";
 import { useBearStore } from "@services/store";

@@ -1,3 +1,3 @@
-export const createTransactionsStore = (set) => ({
+export const createTransactionsStore = () => ({
   transactions: [],
 });
