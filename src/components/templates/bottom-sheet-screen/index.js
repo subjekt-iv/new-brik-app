@@ -31,7 +31,10 @@ export function BottomSheetScreen() {
       <Container>
         <Title>{bottomSheetConfig.title}</Title>
         <Subtitle>{bottomSheetConfig.subTitle}</Subtitle>
-        <BottomSheetCurrencyList currencies={bottomSheetConfig.currencies} />
+        <BottomSheetCurrencyList
+          type={bottomSheetConfig.type}
+          currencies={bottomSheetConfig.currencies}
+        />
       </Container>
     );
   }, [bottomSheetConfig]);

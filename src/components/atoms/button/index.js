@@ -1,6 +1,5 @@
 import { ActivityIndicator, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
-import { Pressable } from "react-native";
 import { Text } from "@components/atoms/text";
 
 const getButtonProperty = (theme, size, property) => {
@@ -49,13 +48,7 @@ const Button = ({
       size={size}
       width={width}
     >
-      {loading ? (
-        <ButtonText>
-          <ActivityIndicator />
-        </ButtonText>
-      ) : (
-        <ButtonText>{title}</ButtonText>
-      )}
+      {loading ? <ActivityIndicator /> : <ButtonText bold>{title}</ButtonText>}
     </ButtonContainer>
   );
 };

@@ -16,6 +16,7 @@ export function InputTitle({
   inputHeight,
   color,
   visible = true,
+  ...props
 }) {
   return (
     <TitledInput>
@@ -31,6 +32,7 @@ export function InputTitle({
         </Text>
       )}
       <Input
+        {...props}
         placeholder={placeholder}
         width={scale(inputWidth)}
         height={verticalScale(inputHeight)}
