@@ -1,8 +1,7 @@
-import styled from "styled-components/native";
-import { View, TouchableOpacity } from "react-native";
+import styled, { useTheme } from "styled-components/native";
+import { TouchableOpacity, View } from "react-native";
 import { scale } from "react-native-size-matters";
 import IconComponent from "@components/atoms/icon";
-import { useTheme } from "styled-components/native";
 import Animated, { LightSpeedInLeft } from "react-native-reanimated";
 import { useBearStore } from "@services/store";
 import { Text } from "@components/atoms/text";
@@ -59,7 +58,7 @@ export function HomeTopBar() {
             color={theme.background.primary}
           />
           <Greeting>Hola</Greeting>
-          <Name>{user.legal.first_name}</Name>
+          <Name>{user?.legal?.first_name}</Name>
         </GreetingContainer>
       </Column>
       <Column>

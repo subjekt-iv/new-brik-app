@@ -1,6 +1,5 @@
 import styled from "styled-components/native";
-import Animated from "react-native-reanimated";
-import { FadeInUp } from "react-native-reanimated";
+import Animated, { FadeInUp } from "react-native-reanimated";
 
 const CardContainer = styled(Animated.View)`
   flex: 1;

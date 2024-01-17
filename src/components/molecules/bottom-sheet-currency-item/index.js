@@ -1,4 +1,4 @@
-import { View, TouchableOpacity } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters";
 import styled from "styled-components/native";
 import Card from "@components/atoms/card";

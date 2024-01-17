@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect, useCallback } from "react";
+import { useCallback, useState } from "react";
 import { API_CORE_URL } from "@services/config";
 
 export const useGuestCoreApi = (path) => {

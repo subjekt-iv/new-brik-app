@@ -1,6 +1,5 @@
 import React from "react";
-import styled from "styled-components/native";
-import { useTheme } from "styled-components/native";
+import styled, { useTheme } from "styled-components/native";
 import IconComponent from "@components/atoms/icon";
 import { scale, verticalScale } from "react-native-size-matters";
 import { Text } from "@components/atoms/text";

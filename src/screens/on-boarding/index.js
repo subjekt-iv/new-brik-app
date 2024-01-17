@@ -1,23 +1,8 @@
-import { useEffect } from "react";
 import styled from "styled-components";
-import { useBearStore } from "@services/store";
 import Button from "@components/atoms/button";
 import Carrousel from "@components/organisms/onboarding-carrousel";
 
 function OnBoardingScreen() {
-  const { setToken } = useBearStore();
-
-  const handleOnPress = async () => {
-    const payload = {}; // put your user here
-    await postData(payload);
-  };
-
-  useEffect(() => {
-    if (data) {
-      setToken(data.access_token);
-    }
-  }, [data]);
-
   return (
     <SafeAreaContainer>
       <Container>
@@ -26,7 +11,7 @@ function OnBoardingScreen() {
         {/* </CenteredView> */}
 
         {/* <Input placeholder="Correo electrónico" /> */}
-        <Button loading={loading} onPress={handleOnPress} title="Siguiente" />
+        <Button title="Siguiente" />
       </Container>
     </SafeAreaContainer>
   );
