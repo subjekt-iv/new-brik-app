@@ -1,8 +1,9 @@
 import styled from "styled-components/native";
 import { View } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
+import { Text } from "@components/atoms/text";
 
-const Text = styled.Text`
+const TextComponent = styled(Text)`
   font-size: ${scale(14)}px;
   color: ${({ theme }) => theme.text.primary};
 `;
@@ -18,12 +19,12 @@ const TextBalance = styled(Text)`
   color: ${({ theme }) => theme.text.primary};
 `;
 
-export function HomeBalanceInfo({ toggleBalance }) {
+export function HomeBalanceInfo({ toggleBalance, balance }) {
   return (
     <BalanceInfo>
-      <Text>Balance</Text>
+      <TextComponent>Balance</TextComponent>
       <TextBalance>
-        {toggleBalance === true ? "$ ******" : "$ 120.000,56"}
+        {toggleBalance === true ? "$ ******" : "$ " + balance}
       </TextBalance>
     </BalanceInfo>
   );

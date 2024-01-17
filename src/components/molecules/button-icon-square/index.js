@@ -1,8 +1,8 @@
 import React from "react";
-import styled from "styled-components/native";
-import { useTheme } from "styled-components/native";
+import styled, { useTheme } from "styled-components/native";
 import IconComponent from "@components/atoms/icon";
 import { scale, verticalScale } from "react-native-size-matters";
+import { Text } from "@components/atoms/text";
 
 const ButtonContainer = styled.View`
   align-items: center;
@@ -19,7 +19,7 @@ const IconWrapper = styled.TouchableOpacity`
   border-radius: 20px;
 `;
 
-const Label = styled.Text`
+const Label = styled(Text)`
   font-size: ${verticalScale(10)}px;
   color: ${({ theme }) => theme.text.primary};
 `;

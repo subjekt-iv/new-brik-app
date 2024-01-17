@@ -6,7 +6,9 @@
     "start": "expo start --dev-client",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "eslint": "npx eslint 'src/**/*.js' --fix",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4.6.0",
@@ -17,6 +19,7 @@
     "@types/react": "~18.2.14",
     "axios": "^1.6.5",
     "expo": "^49.0.18",
+    "expo-font": "~11.4.0",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",
@@ -36,7 +39,17 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "babel-plugin-module-resolver": "^5.0.0"
+    "babel-plugin-module-resolver": "^5.0.0",
+    "eslint": "^8.56.0",
+    "eslint-import-resolver-babel-module": "^5.3.2",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-native": "^4.1.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0"
   },
-  "private": true
+  "private": true,
+  "lint-staged": {
+    "*.js": "eslint --cache --fix"
+  }
 }

@@ -1,6 +1,6 @@
-import { getItem, setItem, removeItem } from "@services/storage";
+import { getItem, removeItem, setItem } from "@services/storage";
 
-export const createAuthStore = (set, get) => ({
+export const createAuthStore = (set) => ({
   token: getItem("token"),
   isLogged: !!getItem("token"),
   setToken: async (token) => {
@@ -15,6 +15,22 @@ export const createAuthStore = (set, get) => ({
     set({
       token: null,
       isLogged: false,
+    });
+  },
+});
+
+export const createUserStore = (set) => ({
+  user: getItem("user"),
+  setUser: async (user) => {
+    await setItem("user", user);
+    set({
+      user,
+    });
+  },
+  removeUser: async () => {
+    await removeItem("user");
+    set({
+      user: null,
     });
   },
 });

@@ -1,4 +1,4 @@
-import { scale, verticalScale, moderateScale } from "react-native-size-matters";
+import { scale, verticalScale } from "react-native-size-matters";
 
 export const themeConfig = {
   dark: {
@@ -66,4 +66,9 @@ export const themeConfig = {
     },
   },
   light: {},
+  fontFamily: {
+    regular: "IBMPlexSans-Regular",
+    medium: "IBMPlexSans-Medium",
+    bold: "IBMPlexSans-Bold",
+  },
 };

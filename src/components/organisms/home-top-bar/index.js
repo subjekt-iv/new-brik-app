@@ -1,10 +1,10 @@
-import styled from "styled-components/native";
-import { View, Text, TouchableOpacity } from "react-native";
+import styled, { useTheme } from "styled-components/native";
+import { TouchableOpacity, View } from "react-native";
 import { scale } from "react-native-size-matters";
 import IconComponent from "@components/atoms/icon";
-import { useTheme } from "styled-components/native";
 import Animated, { LightSpeedInLeft } from "react-native-reanimated";
 import { useBearStore } from "@services/store";
+import { Text } from "@components/atoms/text";
 
 const Container = styled(Animated.View)`
   flex-direction: row;
@@ -39,11 +39,12 @@ const Name = styled(Text)`
 `;
 
 export function HomeTopBar() {
-  const { setToken } = useBearStore();
+  const { removeToken, removeUser, user } = useBearStore();
   const theme = useTheme();
 
   const handleLogout = async () => {
-    await setToken(null);
+    await removeToken();
+    await removeUser();
   };
 
   return (
@@ -57,7 +58,7 @@ export function HomeTopBar() {
             color={theme.background.primary}
           />
           <Greeting>Hola</Greeting>
-          <Name>Agustín</Name>
+          <Name>{user?.legal?.first_name}</Name>
         </GreetingContainer>
       </Column>
       <Column>

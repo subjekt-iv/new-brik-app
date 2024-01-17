@@ -2,18 +2,10 @@ import * as React from "react";
 import { Dimensions, Text, View } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 import Logo from "@components/atoms/logo";
-import styled from "styled-components";
 
 function Index() {
   const width = Dimensions.get("window").width;
-  const height = Dimensions.get("window").height;
-  const CenteredView = styled.View`
-    align-items: flex-end;
-    justify-content: center;
-    flex: 1;
-  `;
 
-  // Use state instead of a constant
   const [currentIndex, setCurrentIndex] = React.useState(0);
 
   return (
@@ -25,7 +17,7 @@ function Index() {
         data={[...new Array(4).keys()]}
         scrollAnimationDuration={1000}
         onSnapToItem={(index) => setCurrentIndex(index)}
-        renderItem={({}) => (
+        renderItem={() => (
           <View
             style={{
               flex: 1,
