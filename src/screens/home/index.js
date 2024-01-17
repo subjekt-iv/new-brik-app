@@ -6,11 +6,11 @@ import { coreResources } from "@services/api/useCoreApi/collection";
 import { useMemo } from "react";
 
 function HomeScreen() {
-  const { data } = useCoreApi(coreResources.Wallets);
+  const { data, loading } = useCoreApi(coreResources.Wallets);
 
   const renderHomeBalanceCard = useMemo(() => {
-    return <HomeBalanceCard data={data} />;
-  }, [data]);
+    return <HomeBalanceCard data={data} loading={loading} />;
+  }, [data, loading]);
 
   return (
     <SafeAreaContainer>

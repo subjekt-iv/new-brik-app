@@ -20,13 +20,15 @@ export const createAuthStore = (set) => ({
 });
 
 export const createUserStore = (set) => ({
-  user: {},
+  user: getItem("user"),
   setUser: async (user) => {
+    await setItem("user", user);
     set({
       user,
     });
   },
   removeUser: async () => {
+    await removeItem("user");
     set({
       user: null,
     });

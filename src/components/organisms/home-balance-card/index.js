@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components/native";
-import { View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import Card from "@components/atoms/card";
 import { scale } from "react-native-size-matters";
 import { HomeTogglerBalanceInfo } from "@components/molecules/home-toggle-balance-info";
@@ -11,6 +11,7 @@ import IconComponent from "@components/atoms/icon";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "styled-components";
 import { useBearStore } from "@services/store";
+import Animated, { FadeIn } from "react-native-reanimated";
 
 const Container = styled(View)`
   flex-direction: column;
@@ -28,9 +29,15 @@ const Column = styled(View)`
   flex: 1;
 `;
 
-const CardBody = styled(View)`
+const CardBody = styled(Animated.View)`
   flex: 1;
   flex-direction: column;
+`;
+
+const CardBodyLoading = styled(View)`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 `;
 
 const CardBodyRow = styled(View)`
@@ -84,34 +91,40 @@ export function HomeBalanceCard({ data }) {
     <Container>
       <Column>
         <Card>
-          <CardBody>
-            <CardBodyRow>
-              <CardBodyColumn alignLeft>
-                <HomeBalanceInfo
-                  toggleBalance={hideBalance}
-                  balance={parseInt(wallet?.balance).toFixed(2)}
-                />
-              </CardBodyColumn>
-              <CardBodyColumn alignRight small marginTop>
-                <SwitchCurrencyContainer onPress={handleSelectCurrency}>
-                  <TextComponent>ARS</TextComponent>
-                  <IconComponent
-                    name="chevron-down"
-                    size={scale(12)}
-                    color={theme.text.primary}
+          {wallet ? (
+            <CardBody entering={FadeIn}>
+              <CardBodyRow>
+                <CardBodyColumn alignLeft>
+                  <HomeBalanceInfo
+                    toggleBalance={hideBalance}
+                    balance={parseInt(wallet?.balance).toFixed(2)}
                   />
-                </SwitchCurrencyContainer>
+                </CardBodyColumn>
+                <CardBodyColumn alignRight small marginTop>
+                  <SwitchCurrencyContainer onPress={handleSelectCurrency}>
+                    <TextComponent>ARS</TextComponent>
+                    <IconComponent
+                      name="chevron-down"
+                      size={scale(12)}
+                      color={theme.text.primary}
+                    />
+                  </SwitchCurrencyContainer>
 
-                <HomeTogglerBalanceInfo
-                  toggleBalance={hideBalance}
-                  handleHideBalance={handleHideBalance}
-                />
+                  <HomeTogglerBalanceInfo
+                    toggleBalance={hideBalance}
+                    handleHideBalance={handleHideBalance}
+                  />
+                </CardBodyColumn>
+              </CardBodyRow>
+              <CardBodyColumn alignCenter>
+                <HomeOperationsButton />
               </CardBodyColumn>
-            </CardBodyRow>
-            <CardBodyColumn alignCenter>
-              <HomeOperationsButton />
-            </CardBodyColumn>
-          </CardBody>
+            </CardBody>
+          ) : (
+            <CardBodyLoading>
+              <ActivityIndicator />
+            </CardBodyLoading>
+          )}
         </Card>
       </Column>
     </Container>
