@@ -1,19 +1,40 @@
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 import { useBearStore } from "@services/store";
 import Button from "@components/atoms/button";
-import Input from "@components/atoms/input";
 import Logo from "@components/atoms/logo";
-import { Text, View } from "react-native";
-import { scale, verticalScale, moderateScale } from "react-native-size-matters";
+import { scale, verticalScale } from "react-native-size-matters";
 import { InputTitle } from "@components/molecules/titled-input"; // Replace with the actual path
+import { useGuestCoreApi } from "@services/api/useGuestCoreApi";
+import { guestCoreResources } from "@services/api/useGuestCoreApi/collection";
+import { Text } from "@components/atoms/text";
 
 function LoginScreen() {
-  const { token, isLogged, setToken, onInitialize } = useBearStore();
-
-  console.log("token", token);
+  const { data, loading, postData } = useGuestCoreApi(guestCoreResources.Login);
+  const { setToken } = useBearStore();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleOnPress = async () => {
-    await setToken("token");
+    const payload = {
+      email: email,
+      password: password,
+    };
+    await postData(payload);
+  };
+
+  useEffect(() => {
+    if (data) {
+      setToken(data.access_token);
+    }
+  }, [data]);
+
+  const handleSetEmail = (email) => {
+    setEmail(email);
+  };
+
+  const handleSetPassword = (password) => {
+    setPassword(password);
   };
 
   return (
@@ -39,6 +60,7 @@ function LoginScreen() {
             inputWidth={300}
             inputHeight={40}
             visible={true}
+            onChangeText={handleSetEmail}
           />
         </AlignedView>
         <AlignedView>
@@ -49,6 +71,8 @@ function LoginScreen() {
             inputWidth={300}
             inputHeight={40}
             visible={true}
+            secureTextEntry={true}
+            onChangeText={handleSetPassword}
           />
         </AlignedView>
         <CenteredView>
@@ -56,6 +80,7 @@ function LoginScreen() {
             onPress={handleOnPress}
             title="Iniciar sesión"
             width={scale(300)}
+            loading={loading}
           />
         </CenteredView>
         <Text
@@ -78,12 +103,7 @@ function LoginScreen() {
         >
           ¿No tenés cuenta?
         </Text>
-        <Button
-          onPress={handleOnPress}
-          bordered={true}
-          title="Registrarse"
-          width={scale(300)}
-        />
+        <Button bordered={true} title="Registrarse" width={scale(300)} />
       </CenteredView>
     </SafeAreaContainer>
   );

@@ -1,5 +1,5 @@
-import styled from "styled-components/native";
 import { useEffect, useMemo, useState } from "react";
+import styled from "styled-components/native";
 import { View } from "react-native";
 import Card from "@components/atoms/card";
 import { scale } from "react-native-size-matters";
@@ -7,6 +7,10 @@ import { HomeTogglerBalanceInfo } from "@components/molecules/home-toggle-balanc
 import { HomeBalanceInfo } from "@components/molecules/home-balance-info";
 import { HomeOperationsButton } from "@components/organisms/home-operations-button-card";
 import { Text } from "@components/atoms/text";
+import IconComponent from "@components/atoms/icon";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useTheme } from "styled-components";
+import { useBearStore } from "@services/store";
 
 const Container = styled(View)`
   flex-direction: column;
@@ -44,10 +48,20 @@ const CardBodyColumn = styled(View)`
   }};
 `;
 
+const SwitchCurrencyContainer = styled(TouchableOpacity)`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: ${scale(6)}px;
+`;
+
 export function HomeBalanceCard({ data }) {
-  const [hideBalance, setHideBalance] = useState(true);
+  const theme = useTheme();
+  const [hideBalance, setHideBalance] = useState(false);
   const [wallet, setWallet] = useState();
   const [currencySelected, setCurrencySelected] = useState(1);
+  const { setBottomSheetCurrencySelectConfig, openBottomSheet } =
+    useBearStore();
 
   useEffect(() => {
     if (data) {
@@ -62,9 +76,9 @@ export function HomeBalanceCard({ data }) {
     setHideBalance(!hideBalance);
   };
 
-  const renderHomeBalanceCard = useMemo(() => {
-    return <HomeBalanceCard data={data} />;
-  }, [data]);
+  const handleSelectCurrency = () => {
+    setBottomSheetCurrencySelectConfig(openBottomSheet);
+  };
 
   return (
     <Container>
@@ -75,11 +89,19 @@ export function HomeBalanceCard({ data }) {
               <CardBodyColumn alignLeft>
                 <HomeBalanceInfo
                   toggleBalance={hideBalance}
-                  balance={wallet?.balance}
+                  balance={parseInt(wallet?.balance).toFixed(2)}
                 />
               </CardBodyColumn>
               <CardBodyColumn alignRight small marginTop>
-                <TextComponent>ARS</TextComponent>
+                <SwitchCurrencyContainer onPress={handleSelectCurrency}>
+                  <TextComponent>ARS</TextComponent>
+                  <IconComponent
+                    name="chevron-down"
+                    size={scale(12)}
+                    color={theme.text.primary}
+                  />
+                </SwitchCurrencyContainer>
+
                 <HomeTogglerBalanceInfo
                   toggleBalance={hideBalance}
                   handleHideBalance={handleHideBalance}

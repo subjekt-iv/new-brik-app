@@ -3,14 +3,9 @@ import styled from "styled-components";
 import { useBearStore } from "@services/store";
 import Button from "@components/atoms/button";
 import Carrousel from "@components/organisms/onboarding-carrousel";
-import { useGuestCoreApi } from "@services/api/useGuestCoreApi";
-import { guestCoreResources } from "@services/api/useGuestCoreApi/collection";
 
 function OnBoardingScreen() {
   const { setToken } = useBearStore();
-  const { data, loading, error, postData } = useGuestCoreApi(
-    guestCoreResources.Login
-  );
 
   const handleOnPress = async () => {
     const payload = {}; // put your user here
