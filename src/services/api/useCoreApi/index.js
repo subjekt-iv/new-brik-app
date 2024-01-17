@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import axios from "axios";
 import { useBearStore } from "@services/store";
 import { API_CORE_URL } from "@services/config";
@@ -49,7 +49,7 @@ export const useCoreApi = (path) => {
     }
   };
 
-  useEffect(() => {
+  const triggerFetch = useCallback(() => {
     fetchData();
   }, [fetchData]);
 
@@ -58,5 +58,6 @@ export const useCoreApi = (path) => {
     loading,
     error,
     postData,
+    triggerFetch,
   };
 };

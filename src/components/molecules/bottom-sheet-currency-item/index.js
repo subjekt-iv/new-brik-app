@@ -27,13 +27,20 @@ const TextSecondary = styled(Text)`
   color: ${({ theme }) => theme.text.secondary};
 `;
 
-export function BottomSheetCurrencyItem({ currency }) {
+export function BottomSheetCurrencyItem({ currency, setCurrencySelected }) {
   const Logo = currency.logo;
+
+  const handleOnPress = () => {
+    setCurrencySelected({
+      id: currency.id,
+      name: currency.name,
+    });
+  };
 
   return (
     <Container>
       <Card>
-        <Grid>
+        <Grid onPress={handleOnPress}>
           <Logo />
           <Column>
             <TextPrimary>{currency.name}</TextPrimary>

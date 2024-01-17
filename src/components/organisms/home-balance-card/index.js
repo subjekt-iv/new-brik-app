@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import styled from "styled-components/native";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator } from "react-native";
 import Card from "@components/atoms/card";
 import { scale } from "react-native-size-matters";
 import { HomeTogglerBalanceInfo } from "@components/molecules/home-toggle-balance-info";
@@ -12,8 +12,10 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "styled-components";
 import { useBearStore } from "@services/store";
 import Animated, { FadeIn } from "react-native-reanimated";
+import { useCoreApi } from "@services/api/useCoreApi";
+import { coreResources } from "@services/api/useCoreApi/collection";
 
-const Container = styled(View)`
+const Container = styled.View`
   flex-direction: column;
   width: 100%;
   padding-horizontal: ${scale(16)}px;
@@ -25,7 +27,7 @@ const TextComponent = styled(Text)`
   color: ${({ theme }) => theme.text.primary};
 `;
 
-const Column = styled(View)`
+const Column = styled.View`
   flex: 1;
 `;
 
@@ -34,18 +36,18 @@ const CardBody = styled(Animated.View)`
   flex-direction: column;
 `;
 
-const CardBodyLoading = styled(View)`
+const CardBodyLoading = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
 `;
 
-const CardBodyRow = styled(View)`
+const CardBodyRow = styled.View`
   flex: 1;
   flex-direction: row;
 `;
 
-const CardBodyColumn = styled(View)`
+const CardBodyColumn = styled.View`
   flex: ${({ small }) => (small ? 0.3 : 1)};
   flex-direction: column;
   align-items: ${({ alignLeft, alignCenter }) => {
@@ -62,22 +64,51 @@ const SwitchCurrencyContainer = styled(TouchableOpacity)`
   gap: ${scale(6)}px;
 `;
 
-export function HomeBalanceCard({ data }) {
+const NoAccountText = styled(Text)`
+  text-align: center;
+  color: ${({ theme }) => theme.text.primary};
+  font-size: ${scale(14)}px;
+`;
+
+export const HomeBalanceCard = ({ data, loading }) => {
   const theme = useTheme();
   const [hideBalance, setHideBalance] = useState(false);
   const [wallet, setWallet] = useState();
-  const [currencySelected] = useState(1);
-  const { setBottomSheetCurrencySelectConfig, openBottomSheet } =
-    useBearStore();
+  const [currenciesWallet, setCurrenciesWallet] = useState([]);
+  const { data: currencies, triggerFetch } = useCoreApi(
+    coreResources.Currencies
+  );
+
+  const {
+    setBottomSheetCurrencySelectConfig,
+    openBottomSheet,
+    currencySelected,
+  } = useBearStore();
 
   useEffect(() => {
-    if (data) {
+    if (data?.length > 0 && currencySelected?.id) {
       const wallet = data.find(
-        (wallet) => wallet.currency === currencySelected
+        (w) => Number(w.currency) === Number(currencySelected.id)
       );
-      setWallet(wallet);
+      setWallet(wallet || null);
     }
-  }, [data, currencySelected]);
+  }, [data, currencySelected.id]);
+
+  useEffect(() => {
+    const currenciesWallet = data?.map((w) => ({ id: w.currency }));
+    setCurrenciesWallet(currenciesWallet || []);
+    triggerFetch();
+  }, []);
+
+  useEffect(() => {
+    if (currencies?.length > 0) {
+      const currenciesWalletUpdated = currenciesWallet.map((cw) => {
+        const currency = currencies.find((c) => c.id === cw.id);
+        return { ...cw, name: currency?.name };
+      });
+      setCurrenciesWallet(currenciesWalletUpdated);
+    }
+  }, [currenciesWallet, currencies]);
 
   const handleHideBalance = () => {
     setHideBalance(!hideBalance);
@@ -87,46 +118,77 @@ export function HomeBalanceCard({ data }) {
     setBottomSheetCurrencySelectConfig(openBottomSheet);
   };
 
+  const renderCardBody = useMemo(() => {
+    if (loading) {
+      return (
+        <CardBodyLoading>
+          <ActivityIndicator />
+        </CardBodyLoading>
+      );
+    }
+    if (wallet) {
+      return (
+        <CardBody entering={FadeIn}>
+          <CardBodyRow>
+            <CardBodyColumn alignLeft>
+              <HomeBalanceInfo
+                toggleBalance={hideBalance}
+                balance={parseInt(wallet?.balance).toFixed(2)}
+              />
+            </CardBodyColumn>
+            <CardBodyColumn alignRight small marginTop>
+              <SwitchCurrencyContainer onPress={handleSelectCurrency}>
+                <TextComponent>{currencySelected.name}</TextComponent>
+                <IconComponent
+                  name="chevron-down"
+                  size={scale(12)}
+                  color={theme.text.primary}
+                />
+              </SwitchCurrencyContainer>
+
+              <HomeTogglerBalanceInfo
+                toggleBalance={hideBalance}
+                handleHideBalance={handleHideBalance}
+              />
+            </CardBodyColumn>
+          </CardBodyRow>
+          <CardBodyColumn alignCenter>
+            <HomeOperationsButton />
+          </CardBodyColumn>
+        </CardBody>
+      );
+    }
+    if (!wallet && !loading) {
+      return (
+        <CardBody entering={FadeIn}>
+          <CardBodyRow>
+            <CardBodyColumn alignLeft />
+            <CardBodyColumn alignRight small marginTop>
+              <SwitchCurrencyContainer onPress={handleSelectCurrency}>
+                <TextComponent>{currencySelected.name}</TextComponent>
+                <IconComponent
+                  name="chevron-down"
+                  size={scale(12)}
+                  color={theme.text.primary}
+                />
+              </SwitchCurrencyContainer>
+            </CardBodyColumn>
+          </CardBodyRow>
+          <CardBodyColumn alignCenter>
+            <NoAccountText>
+              No tienes una cuenta de {currencySelected.name}
+            </NoAccountText>
+          </CardBodyColumn>
+        </CardBody>
+      );
+    }
+  }, [wallet, loading, hideBalance, currencySelected, theme]);
+
   return (
     <Container>
       <Column>
-        <Card>
-          {wallet ? (
-            <CardBody entering={FadeIn}>
-              <CardBodyRow>
-                <CardBodyColumn alignLeft>
-                  <HomeBalanceInfo
-                    toggleBalance={hideBalance}
-                    balance={parseInt(wallet?.balance).toFixed(2)}
-                  />
-                </CardBodyColumn>
-                <CardBodyColumn alignRight small marginTop>
-                  <SwitchCurrencyContainer onPress={handleSelectCurrency}>
-                    <TextComponent>ARS</TextComponent>
-                    <IconComponent
-                      name="chevron-down"
-                      size={scale(12)}
-                      color={theme.text.primary}
-                    />
-                  </SwitchCurrencyContainer>
-
-                  <HomeTogglerBalanceInfo
-                    toggleBalance={hideBalance}
-                    handleHideBalance={handleHideBalance}
-                  />
-                </CardBodyColumn>
-              </CardBodyRow>
-              <CardBodyColumn alignCenter>
-                <HomeOperationsButton />
-              </CardBodyColumn>
-            </CardBody>
-          ) : (
-            <CardBodyLoading>
-              <ActivityIndicator />
-            </CardBodyLoading>
-          )}
-        </Card>
+        <Card>{renderCardBody}</Card>
       </Column>
     </Container>
   );
-}
+};
