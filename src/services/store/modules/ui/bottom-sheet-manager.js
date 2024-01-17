@@ -4,19 +4,19 @@ import BTCLogo from "@assets/svg/btc-logo.svg";
 
 const currencies = [
   {
-    id: "1",
+    id: 1,
     name: "ARS",
     description: "Pesos Argentinos",
     logo: ARSLogo,
   },
   {
-    id: "2",
+    id: 2,
     name: "USDT",
     description: "Theter",
     logo: TheterLogo,
   },
   {
-    id: "3",
+    id: 3,
     name: "BTC",
     description: "Bitcoin",
     logo: BTCLogo,

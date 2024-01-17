@@ -26,7 +26,6 @@ function LoginScreen() {
 
   useEffect(() => {
     if (data) {
-      console.log(JSON.stringify(data));
       setUser(data.user);
       setToken(data.access_token);
     }
