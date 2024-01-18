@@ -3,6 +3,7 @@ import { getItem, removeItem, setItem } from "@services/storage";
 export const createAuthStore = (set) => ({
   token: getItem("token"),
   isLogged: !!getItem("token"),
+  error_code: null,
   setToken: async (token) => {
     await setItem("token", token);
     set({
@@ -16,6 +17,12 @@ export const createAuthStore = (set) => ({
       token: null,
       isLogged: false,
     });
+  },
+  setErrorCode: async (errorCode) => {
+    await set({ error_code: errorCode });
+    setTimeout(async () => {
+      await set({ error_code: null });
+    }, 5000);
   },
 });
 
