@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useCallback, useState } from "react";
 import { API_CORE_URL } from "@services/config";
+import { useBearStore } from "@services/store";
 
 export const useGuestCoreApi = (path) => {
   const [data, setData] = useState(null);
@@ -24,6 +25,8 @@ export const useGuestCoreApi = (path) => {
     }
   }, [api, path]);
 
+  const { setErrorCode, error_code } = useBearStore();
+
   const postData = async (postData) => {
     try {
       setLoading(true);
@@ -31,6 +34,7 @@ export const useGuestCoreApi = (path) => {
       setData(response.data);
     } catch (error) {
       console.log("error", JSON.stringify(error.response.data));
+      setErrorCode(error.response.data.error.details.status_code);
       setError(error);
     } finally {
       setLoading(false);

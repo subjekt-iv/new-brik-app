@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { scale, verticalScale } from "react-native-size-matters";
 import styled from "styled-components";
-
 import Button from "@components/atoms/button";
 import Logo from "@components/atoms/logo";
 import { InputTitle } from "@components/molecules/titled-input"; // Replace with the actual path
@@ -12,11 +11,19 @@ import { guestCoreResources } from "@services/api/useGuestCoreApi/collection";
 
 function LoginScreen() {
   const { data, loading, postData } = useGuestCoreApi(guestCoreResources.Login);
-  const { setToken, setUser } = useBearStore();
+  const { setToken, setUser, error_code } = useBearStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleOnPress = async () => {
+    if (!email || !password) {
+      setShowAlert(!email || !password);
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 5000);
+      return;
+    }
     const payload = {
       email: email,
       password: password,
@@ -62,6 +69,7 @@ function LoginScreen() {
             inputWidth={300}
             inputHeight={40}
             visible={true}
+            showError={error_code !== null}
             onChangeText={handleSetEmail}
           />
         </AlignedView>
@@ -74,6 +82,7 @@ function LoginScreen() {
             inputHeight={40}
             visible={true}
             secureTextEntry={true}
+            showAlert={showAlert}
             onChangeText={handleSetPassword}
           />
         </AlignedView>
@@ -121,7 +130,7 @@ const ContainerTop = styled.View`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin-top: 48;
+  margin-top: ${scale(48)}px;
 `;
 
 const Container = styled.View`
