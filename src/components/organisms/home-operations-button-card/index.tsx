@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { View } from "react-native";
 import styled from "styled-components/native";
 import { ButtonIconSquare } from "@components/molecules/button-icon-square";

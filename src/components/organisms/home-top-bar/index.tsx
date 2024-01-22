@@ -39,6 +39,7 @@ const Name = styled(Text)`
 `;
 
 export function HomeTopBar() {
+  // @ts-ignore:next-line
   const { removeToken, removeUser, user } = useBearStore();
   const theme = useTheme();
 

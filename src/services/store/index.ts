@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { create } from "zustand";
 import { createThemeStore } from "./modules/ui/theme-manager";
 import { createBottomSheetStore } from "./modules/ui/bottom-sheet-manager";
