@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { scale, verticalScale } from "react-native-size-matters";
+import { SafeAreaView, View } from "react-native";
 import styled from "styled-components";
 import Button from "@components/atoms/button";
 import Logo from "@components/atoms/logo";
@@ -11,6 +12,7 @@ import { guestCoreResources } from "@services/api/useGuestCoreApi/collection";
 
 function LoginScreen() {
   const { data, loading, postData } = useGuestCoreApi(guestCoreResources.Login);
+  // @ts-ignore:next-line
   const { setToken, setUser, error_code } = useBearStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -71,6 +73,7 @@ function LoginScreen() {
             visible={true}
             showError={error_code !== null}
             onChangeText={handleSetEmail}
+            showAlert={undefined}
           />
         </AlignedView>
         <AlignedView>
@@ -84,6 +87,7 @@ function LoginScreen() {
             secureTextEntry={true}
             showAlert={showAlert}
             onChangeText={handleSetPassword}
+            showError={undefined}
           />
         </AlignedView>
         <CenteredView>
@@ -114,18 +118,23 @@ function LoginScreen() {
         >
           ¿No tenés cuenta?
         </Text>
-        <Button bordered={true} title="Registrarse" width={scale(300)} />
+        <Button
+          bordered={true}
+          title="Registrarse"
+          width={scale(300)}
+          onPress={undefined}
+        />
       </CenteredView>
     </SafeAreaContainer>
   );
 }
 
-const SafeAreaContainer = styled.SafeAreaView`
+const SafeAreaContainer = styled(SafeAreaView)`
   flex: 1;
   background-color: ${({ theme }) => theme.background.app};
 `;
 
-const ContainerTop = styled.View`
+const ContainerTop = styled(View)`
   flex: 1;
   display: flex;
   align-items: center;
@@ -133,19 +142,19 @@ const ContainerTop = styled.View`
   margin-top: ${scale(48)}px;
 `;
 
-const Container = styled.View`
+const Container = styled(View)`
   flex: 2;
   display: flex;
   align-items: center;
   justify-content: flex-start;
 `;
 
-const AlignedView = styled.View`
+const AlignedView = styled(View)`
   align-items: flex-start;
   width: 100%;
   padding-horizontal: ${scale(24)}px;
 `;
-const CenteredView = styled.View`
+const CenteredView = styled(View)`
   flex: 1.2;
   display: flex;
   align-items: center;

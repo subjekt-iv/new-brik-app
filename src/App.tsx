@@ -7,9 +7,10 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useBearStore } from "@services/store";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import ThemeArgument from "styled-components";
 
 export default function App() {
-  const theme = useBearStore((state) => state.theme);
+  const theme = useBearStore((state: { theme: string }) => state.theme);
   const [fontsLoaded] = useFonts({
     "IBMPlexSans-Regular": require("./assets/fonts/IBMPlexSans-Regular.ttf"),
     "IBMPlexSans-Medium": require("./assets/fonts/IBMPlexSans-Medium.ttf"),
@@ -28,7 +29,7 @@ export default function App() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme as unknown as typeof ThemeArgument}>
         <StatusBar style="light" />
         <MainNavigator />
         <BottomSheetDrawer />

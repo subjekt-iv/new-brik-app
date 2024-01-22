@@ -14,6 +14,7 @@ const Separator = styled(View)`
 `;
 
 export function BottomSheetCurrencyList({ currencies = [] }) {
+  // @ts-ignore next-line
   const { setCurrencySelected, openBottomSheet, setOpenBottomSheet } =
     useBearStore();
   const handleSetCurrencySelected = (currency) => {
