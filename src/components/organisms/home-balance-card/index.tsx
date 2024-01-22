@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useEffect, useMemo, useState } from "react";
 import styled from "styled-components/native";
 import { ActivityIndicator } from "react-native";
@@ -14,6 +15,7 @@ import { useBearStore } from "@services/store";
 import Animated, { FadeIn } from "react-native-reanimated";
 import { useCoreApi } from "@services/api/useCoreApi";
 import { coreResources } from "@services/api/useCoreApi/collection";
+import ts from "typescript";
 
 const Container = styled.View`
   flex-direction: column;

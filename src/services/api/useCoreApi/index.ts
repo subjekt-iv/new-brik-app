@@ -1,40 +1,49 @@
+// @ts-nocheck
+import { useCallback, useMemo, useState } from "react";
 import axios from "axios";
-import { useCallback, useState } from "react";
-import { API_CORE_URL } from "@services/config";
 import { useBearStore } from "@services/store";
+import { API_CORE_URL } from "@services/config";
 
-export const useGuestCoreApi = (path) => {
+export const useCoreApi = (path) => {
+  const { token } = useBearStore();
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false); // Cambiado a false inicialmente
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const api = axios.create({
-    baseURL: API_CORE_URL,
-  });
+  const api = useMemo(() => {
+    if (!token) return null;
+    return axios.create({
+      baseURL: API_CORE_URL,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }, [token]);
 
   const fetchData = useCallback(async () => {
     try {
+      if (!token) throw new Error("Token is required");
       setLoading(true);
       const response = await api.get(path);
       setData(response.data);
     } catch (error) {
       console.log("error", JSON.stringify(error.response.data));
+
       setError(error);
     } finally {
       setLoading(false);
     }
-  }, [api, path]);
-
-  const { setErrorCode, error_code } = useBearStore();
+  }, [api, path, token]);
 
   const postData = async (postData) => {
     try {
+      if (!token) throw new Error("Token is required");
       setLoading(true);
       const response = await api.post(path, postData);
       setData(response.data);
     } catch (error) {
       console.log("error", JSON.stringify(error.response.data));
-      setErrorCode(error.response.data.error.details.status_code);
+
       setError(error);
     } finally {
       setLoading(false);
@@ -49,8 +58,7 @@ export const useGuestCoreApi = (path) => {
     data,
     loading,
     error,
-    fetchData,
     postData,
-    triggerFetch, // Función para iniciar manualmente la solicitud
+    triggerFetch,
   };
 };

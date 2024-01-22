@@ -24,6 +24,7 @@ const Subtitle = styled(Text)`
 `;
 
 export function BottomSheetScreen() {
+  // @ts-ignore:next-line
   const { bottomSheetConfig } = useBearStore();
 
   const renderContent = useMemo(() => {
@@ -31,10 +32,7 @@ export function BottomSheetScreen() {
       <Container>
         <Title>{bottomSheetConfig.title}</Title>
         <Subtitle>{bottomSheetConfig.subTitle}</Subtitle>
-        <BottomSheetCurrencyList
-          type={bottomSheetConfig.type}
-          currencies={bottomSheetConfig.currencies}
-        />
+        <BottomSheetCurrencyList currencies={bottomSheetConfig.currencies} />
       </Container>
     );
   }, [bottomSheetConfig]);

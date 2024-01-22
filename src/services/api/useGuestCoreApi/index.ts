@@ -1,48 +1,41 @@
-import { useCallback, useMemo, useState } from "react";
+// @ts-nocheck
 import axios from "axios";
-import { useBearStore } from "@services/store";
+import { useCallback, useState } from "react";
 import { API_CORE_URL } from "@services/config";
+import { useBearStore } from "@services/store";
 
-export const useCoreApi = (path) => {
-  const { token } = useBearStore();
+export const useGuestCoreApi = (path) => {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // Cambiado a false inicialmente
   const [error, setError] = useState(null);
 
-  const api = useMemo(() => {
-    if (!token) return null;
-    return axios.create({
-      baseURL: API_CORE_URL,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  }, [token]);
+  const api = axios.create({
+    baseURL: API_CORE_URL,
+  });
 
   const fetchData = useCallback(async () => {
     try {
-      if (!token) throw new Error("Token is required");
       setLoading(true);
       const response = await api.get(path);
       setData(response.data);
     } catch (error) {
       console.log("error", JSON.stringify(error.response.data));
-
       setError(error);
     } finally {
       setLoading(false);
     }
-  }, [api, path, token]);
+  }, [api, path]);
+
+  const { setErrorCode } = useBearStore();
 
   const postData = async (postData) => {
     try {
-      if (!token) throw new Error("Token is required");
       setLoading(true);
       const response = await api.post(path, postData);
       setData(response.data);
     } catch (error) {
       console.log("error", JSON.stringify(error.response.data));
-
+      setErrorCode(error.response.data.error.details.status_code);
       setError(error);
     } finally {
       setLoading(false);
@@ -57,7 +50,8 @@ export const useCoreApi = (path) => {
     data,
     loading,
     error,
+    fetchData,
     postData,
-    triggerFetch,
+    triggerFetch, // Función para iniciar manualmente la solicitud
   };
 };

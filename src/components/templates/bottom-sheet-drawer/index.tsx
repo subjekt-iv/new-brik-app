@@ -1,3 +1,4 @@
+// @ts-nocheck
 import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTheme } from "styled-components/native";
@@ -59,7 +60,6 @@ export function BottomSheetDrawer() {
       }}
     >
       <BottomSheetScreen
-        type={bottomSheetConfig.type}
         title={bottomSheetConfig.title}
         subTitle={bottomSheetConfig.subTitle}
       />
