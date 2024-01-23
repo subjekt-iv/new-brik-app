@@ -4,7 +4,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { OnBoardingStack } from "./stacks/on-boarding";
 import { navigate, navigationRef } from "@services/router";
-
 import { HomeStack } from "./stacks/home";
 import IconComponent from "@components/atoms/icon";
 import { useTheme } from "styled-components/native";

@@ -9,8 +9,16 @@ import { Text } from "@components/atoms/text";
 import { useBearStore } from "@services/store";
 import { useGuestCoreApi } from "@services/api/useGuestCoreApi";
 import { guestCoreResources } from "@services/api/useGuestCoreApi/collection";
+import { useNavigation } from "@react-navigation/native";
+import { navigate } from "@services/router";
 
 function LoginScreen() {
+  const navigation = useNavigation();
+  const goToRegister = () => {
+    // @ts-ignore:next-line
+    navigation.removeListener();
+    navigate("OnBoardingStack", { screen: "RegisterScreen" });
+  };
   const { data, loading, postData } = useGuestCoreApi(guestCoreResources.Login);
   // @ts-ignore:next-line
   const { setToken, setUser, error_code } = useBearStore();
@@ -122,7 +130,7 @@ function LoginScreen() {
           bordered={true}
           title="Registrarse"
           width={scale(300)}
-          onPress={undefined}
+          onPress={goToRegister}
         />
       </CenteredView>
     </SafeAreaContainer>

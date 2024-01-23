@@ -1,10 +1,25 @@
 import { getItem, removeItem, setItem } from "@services/storage";
 
-export const createAuthStore = (set) => ({
+interface AuthStore {
+  token: string | null;
+  isLogged: boolean;
+  error_code: number | null;
+  setToken: (token: string) => Promise<void>;
+  removeToken: () => Promise<void>;
+  setErrorCode: (errorCode: number) => Promise<void>;
+}
+
+interface UserStore {
+  user: any; // You should replace 'any' with the actual type of your user data
+  setUser: (user: any) => Promise<void>; // Replace 'any' with the actual type of your user data
+  removeUser: () => Promise<void>;
+}
+
+export const createAuthStore = (set): AuthStore => ({
   token: getItem("token"),
   isLogged: !!getItem("token"),
   error_code: null,
-  setToken: async (token) => {
+  setToken: async (token: string) => {
     await setItem("token", token);
     set({
       token,
@@ -18,7 +33,7 @@ export const createAuthStore = (set) => ({
       isLogged: false,
     });
   },
-  setErrorCode: async (errorCode) => {
+  setErrorCode: async (errorCode: number) => {
     await set({ error_code: errorCode });
     setTimeout(async () => {
       await set({ error_code: null });
@@ -26,7 +41,7 @@ export const createAuthStore = (set) => ({
   },
 });
 
-export const createUserStore = (set) => ({
+export const createUserStore = (set): UserStore => ({
   user: getItem("user"),
   setUser: async (user) => {
     await setItem("user", user);

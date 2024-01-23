@@ -2,17 +2,20 @@ import { SafeAreaView, View } from "react-native";
 import styled from "styled-components";
 import Button from "@components/atoms/button";
 import Carrousel from "@components/organisms/onboarding-carrousel";
+import { useNavigation } from "@react-navigation/native";
 
 function OnBoardingScreen() {
+  const navigation = useNavigation();
+
+  const goToLogin = () => {
+    // @ts-ignore:next-line
+    navigation.navigate("LoginScreen");
+  };
   return (
     <SafeAreaContainer>
       <Container>
-        {/* <CenteredView> */}
         <Carrousel />
-        {/* </CenteredView> */}
-
-        {/* <Input placeholder="Correo electrónico" /> */}
-        <Button title="Siguiente" onPress={undefined} width={undefined} />
+        <Button title="Acceder" onPress={goToLogin} width={undefined} />
       </Container>
     </SafeAreaContainer>
   );

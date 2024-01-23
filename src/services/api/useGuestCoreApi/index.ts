@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 import { API_CORE_URL } from "@services/config";
 import { useBearStore } from "@services/store";
 
-export const useGuestCoreApi = (path) => {
+export const useGuestCoreApi = (path: string) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false); // Cambiado a false inicialmente
   const [error, setError] = useState(null);
@@ -27,7 +27,7 @@ export const useGuestCoreApi = (path) => {
 
   const { setErrorCode } = useBearStore();
 
-  const postData = async (postData) => {
+  const postData = async (postData: object) => {
     try {
       setLoading(true);
       const response = await api.post(path, postData);
