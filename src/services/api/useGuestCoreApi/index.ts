@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from "axios";
 import { useCallback, useState } from "react";
 import { API_CORE_URL } from "@services/config";

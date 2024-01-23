@@ -7,7 +7,7 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "eslint": "npx eslint 'src/**/*.js' --fix",
+    "eslint": "npx eslint 'src/**/*.ts' --fix",
     "prepare": "husky install",
     "ts:check": "tsc"
   },
@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@typescript-eslint/eslint-plugin": "^6.19.1",
     "babel-plugin-module-resolver": "^5.0.0",
     "eslint": "^8.56.0",
     "eslint-import-resolver-babel-module": "^5.3.2",

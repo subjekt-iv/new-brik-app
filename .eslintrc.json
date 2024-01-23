@@ -5,9 +5,9 @@
   },
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings"
+    "plugin:import/typescript",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -15,6 +15,7 @@
   },
   "plugins": ["react", "react-native", "import"],
   "rules": {
+    "@typescript-eslint/ban-ts-ignore": "off",
     "indent": ["error", 2],
     "react/react-in-jsx-scope": "off",
     "linebreak-style": ["error", "unix"],
@@ -27,7 +28,9 @@
       "version": "detect"
     },
     "import/resolver": {
-      "babel-module": {}
+      "node": {
+        "extensions": [".ts", ".tsx"]
+      }
     },
     "import/ignore": ["node_modules/react-native/index\\.js$"]
   }
