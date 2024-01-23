@@ -3,8 +3,9 @@
     "name": "new-brik-native",
     "slug": "new-brik-native",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "assetBundlePatterns": ["**/*"],
+    "experiments": {
+      "tsconfigPaths": true
+    }
   }
 }
