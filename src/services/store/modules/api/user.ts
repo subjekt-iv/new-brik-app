@@ -1,6 +1,6 @@
 import { getItem, removeItem, setItem } from "@services/storage";
 
-interface AuthStore {
+export interface AuthStore {
   token: string | null;
   isLogged: boolean;
   error_code: number | null;
@@ -9,7 +9,7 @@ interface AuthStore {
   setErrorCode: (errorCode: number) => Promise<void>;
 }
 
-interface UserStore {
+export interface UserStore {
   user: any; // You should replace 'any' with the actual type of your user data
   setUser: (user: any) => Promise<void>; // Replace 'any' with the actual type of your user data
   removeUser: () => Promise<void>;

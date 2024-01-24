@@ -13,7 +13,6 @@ export function OnBoardingStack() {
         component={OnBoardingScreen}
         options={{
           headerShown: false,
-          title: "werfwf",
         }}
       />
       <Stack.Screen
@@ -21,7 +20,6 @@ export function OnBoardingStack() {
         component={LoginScreen}
         options={{
           headerShown: false,
-          title: "werfwf",
         }}
       />
       <Stack.Screen
@@ -29,7 +27,6 @@ export function OnBoardingStack() {
         component={RegisterScreen}
         options={{
           headerShown: false,
-          title: "werfwf",
         }}
       />
     </Stack.Navigator>

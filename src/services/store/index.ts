@@ -1,9 +1,15 @@
 import { create } from "zustand";
 import { createThemeStore } from "./modules/ui/theme-manager";
 import { createBottomSheetStore } from "./modules/ui/bottom-sheet-manager";
-import { createAuthStore, createUserStore } from "./modules/api/user";
+import {
+  createAuthStore,
+  createUserStore,
+  AuthStore,
+  UserStore,
+} from "./modules/api/user";
 
-export const useBearStore = create((...a) => ({
+interface BearStore extends AuthStore, UserStore {}
+export const useBearStore = create<BearStore>()((...a) => ({
   ...createThemeStore(...a),
   ...createBottomSheetStore(...a),
   ...createAuthStore(...a),
