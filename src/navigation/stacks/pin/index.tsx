@@ -1,5 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import PinScreen from "@screens/on-boarding";
+import PinScreen from "@screens/pin";
 
 const Stack = createStackNavigator();
 

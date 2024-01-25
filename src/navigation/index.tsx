@@ -13,7 +13,7 @@ import { useBearStore } from "@services/store";
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function OnBoarding() {
+function GuestStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -26,7 +26,8 @@ function OnBoarding() {
     </Stack.Navigator>
   );
 }
-function Home() {
+
+function AuthStack() {
   const theme = useTheme();
   return (
     <Tab.Navigator
@@ -65,32 +66,46 @@ function Home() {
     </Tab.Navigator>
   );
 }
+
 function Pin() {
-  <Stack.Navigator>
-    <Stack.Screen
-      name="PinStack"
-      component={PinStack}
-      options={{
-        headerShown: false,
-      }}
-    />
-  </Stack.Navigator>;
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="PinStack"
+        component={PinStack}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </Stack.Navigator>
+  );
 }
 
 export function MainNavigator() {
   const { isLogged, user } = useBearStore();
-  const pinStatus: boolean = user ? user.has_pin_enabled : null;
-  // console.log(pinStatus);
+  const pinStatus: boolean = true;
+  console.log(pinStatus);
 
   useEffect(() => {
-    isLogged && navigate("HomeStack", {});
+    isLogged && !pinStatus && navigate("HomeStack", {});
     !isLogged && navigate("OnBoardingStack", {});
     console.log("MainNavigator -> isLogged", isLogged);
   }, [isLogged]);
 
+  const renderAuthStack = () => {
+    if (pinStatus === true) {
+      return <Pin />;
+    }
+    return <AuthStack />;
+  };
+
+  const renderGuestStack = () => {
+    return <GuestStack />;
+  };
+
   return (
     <NavigationContainer ref={navigationRef}>
-      {isLogged ? <Home /> : <OnBoarding />}
+      {isLogged ? renderAuthStack() : renderGuestStack()}
     </NavigationContainer>
   );
 }
