@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { OnBoardingStack } from "./stacks/on-boarding";
+import { PinStack } from "./stacks/pin";
 import { navigate, navigationRef } from "@services/router";
 import { HomeStack } from "./stacks/home";
 import IconComponent from "@components/atoms/icon";
@@ -25,7 +26,6 @@ function OnBoarding() {
     </Stack.Navigator>
   );
 }
-
 function Home() {
   const theme = useTheme();
   return (
@@ -33,7 +33,7 @@ function Home() {
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarIcon: ({ focused, size }) => {
-          let iconName;
+          let iconName: string;
           if (route.name === "HomeStack") {
             iconName = "home";
           } else if (route.name === "WalletStack") {
@@ -65,13 +65,26 @@ function Home() {
     </Tab.Navigator>
   );
 }
+function Pin() {
+  <Stack.Navigator>
+    <Stack.Screen
+      name="PinStack"
+      component={PinStack}
+      options={{
+        headerShown: false,
+      }}
+    />
+  </Stack.Navigator>;
+}
 
 export function MainNavigator() {
-  const { isLogged } = useBearStore();
+  const { isLogged, user } = useBearStore();
+  const pinStatus: boolean = user ? user.has_pin_enabled : null;
+  // console.log(pinStatus);
 
   useEffect(() => {
-    isLogged && navigate("HomeStack");
-    !isLogged && navigate("OnBoardingStack");
+    isLogged && navigate("HomeStack", {});
+    !isLogged && navigate("OnBoardingStack", {});
     console.log("MainNavigator -> isLogged", isLogged);
   }, [isLogged]);
 

@@ -4,23 +4,18 @@ import { SafeAreaView, View } from "react-native";
 import styled from "styled-components";
 import Button from "@components/atoms/button";
 import Logo from "@components/atoms/logo";
-import { InputTitle } from "@components/molecules/titled-input"; // Replace with the actual path
+import { InputTitle } from "@components/molecules/titled-input";
 import { Text } from "@components/atoms/text";
 import { useBearStore } from "@services/store";
 import { useGuestCoreApi } from "@services/api/useGuestCoreApi";
 import { guestCoreResources } from "@services/api/useGuestCoreApi/collection";
-import { useNavigation } from "@react-navigation/native";
 import { navigate } from "@services/router";
 
 function LoginScreen() {
-  const navigation = useNavigation();
   const goToRegister = () => {
-    // @ts-ignore:next-line
-    navigation.removeListener();
     navigate("OnBoardingStack", { screen: "RegisterScreen" });
   };
   const { data, loading, postData } = useGuestCoreApi(guestCoreResources.Login);
-  // @ts-ignore:next-line
   const { setToken, setUser, error_code } = useBearStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -48,11 +43,11 @@ function LoginScreen() {
     }
   }, [data]);
 
-  const handleSetEmail = (email) => {
+  const handleSetEmail = (email: string) => {
     setEmail(email);
   };
 
-  const handleSetPassword = (password) => {
+  const handleSetPassword = (password: string) => {
     setPassword(password);
   };
 

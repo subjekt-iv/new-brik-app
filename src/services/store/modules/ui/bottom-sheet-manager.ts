@@ -2,7 +2,13 @@ import ARSLogo from "@assets/svg/ars-logo.svg";
 import TheterLogo from "@assets/svg/theter-logo.svg";
 import BTCLogo from "@assets/svg/btc-logo.svg";
 
-const currencies = [
+export interface Currency {
+  id: number;
+  name: string;
+  description: string;
+  logo: React.FC; // Assuming logo is a file path or URL
+}
+const currencies: Currency[] = [
   {
     id: 1,
     name: "ARS",
@@ -23,6 +29,19 @@ const currencies = [
   },
 ];
 
+export enum BottomSheetType {
+  Send = "send",
+  Deposit = "deposit",
+  Convert = "convert",
+  CurrencySelect = "currencySelect",
+}
+
+export interface BottomSheetConfig {
+  type: BottomSheetType;
+  title: string;
+  subTitle: string;
+}
+
 export const createBottomSheetStore = (set) => ({
   openBottomSheet: false,
   bottomSheetConfig: {
@@ -30,9 +49,10 @@ export const createBottomSheetStore = (set) => ({
     title: "",
     subTitle: "",
   },
-  setOpenBottomSheet: (value) => set({ openBottomSheet: value }),
-  setBottomSheetConfig: (config) => set({ bottomSheetConfig: config }),
-  setBottomSheetSendConfig: (openBottomSheet) => {
+  setOpenBottomSheet: (value: boolean) => set({ openBottomSheet: value }),
+  setBottomSheetConfig: (config: BottomSheetConfig) =>
+    set({ bottomSheetConfig: config }),
+  setBottomSheetSendConfig: (openBottomSheet: boolean) => {
     set({
       bottomSheetConfig: {
         type: "send",
@@ -43,7 +63,7 @@ export const createBottomSheetStore = (set) => ({
       openBottomSheet: !openBottomSheet,
     });
   },
-  setBottomSheetDepositConfig: (openBottomSheet) => {
+  setBottomSheetDepositConfig: (openBottomSheet: boolean) => {
     set({
       bottomSheetConfig: {
         type: "deposit",

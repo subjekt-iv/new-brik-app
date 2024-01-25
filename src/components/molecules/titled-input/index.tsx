@@ -4,10 +4,24 @@ import { scale, verticalScale } from "react-native-size-matters";
 import Input from "@components/atoms/input";
 import { Text, View } from "react-native";
 
+interface InputTitleProps {
+  label: string;
+  placeholder: string;
+  inputWidth: number;
+  inputHeight: number;
+  color: string;
+  visible?: boolean;
+  showError?: boolean;
+  showAlert?: boolean;
+  secureTextEntry?: boolean;
+  onChangeText?: (text: string) => void;
+}
+
 const TitledInput = styled(View)`
   gap: ${verticalScale(6)}px;
 `;
-const Container = styled.View`
+
+const Container = styled(View)`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -22,8 +36,9 @@ export function InputTitle({
   visible = true,
   showError,
   showAlert,
+  secureTextEntry,
   ...props
-}) {
+}: InputTitleProps) {
   return (
     <TitledInput>
       {visible && (
@@ -43,7 +58,6 @@ export function InputTitle({
                 color: "#FF2E00",
                 fontSize: scale(12),
                 marginTop: verticalScale(24),
-                // marginRight: scale(14),
               }}
             >
               *Credenciales Invalidas
@@ -55,7 +69,6 @@ export function InputTitle({
                 color: "#FF2E00",
                 fontSize: scale(12),
                 marginTop: verticalScale(24),
-                // marginRight: scale(14),
               }}
             >
               *Credenciales Requeridas
@@ -68,6 +81,7 @@ export function InputTitle({
         placeholder={placeholder}
         width={scale(inputWidth)}
         height={verticalScale(inputHeight)}
+        secureTextEntry={secureTextEntry}
       />
     </TitledInput>
   );
