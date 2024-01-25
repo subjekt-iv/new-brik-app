@@ -111,8 +111,6 @@ export function MainNavigator() {
   const { isLogged, user } = useBearStore();
   const pinStatus: boolean = true;
 
-  console.log(pinStatus);
-
   useEffect(() => {
     isLogged && !pinStatus && navigate("HomeStack", {});
     !isLogged && navigate("OnBoardingStack", {});

@@ -4,6 +4,7 @@ import { moderateScale } from "react-native-size-matters";
 import { BottomSheetCurrencyList } from "@components/organisms/bottom-sheet-currency-list";
 import { useBearStore } from "@services/store";
 import { Text } from "@components/atoms/text";
+import { BottomSheetAccountDetails } from "@/components/organisms/bottom-sheet-account-details";
 
 const Container = styled.View`
   flex: 1;
@@ -28,6 +29,17 @@ export function BottomSheetScreen() {
   const { bottomSheetConfig } = useBearStore();
 
   const renderContent = useMemo(() => {
+    if (bottomSheetConfig.type === "accountSelected") {
+      console.log(bottomSheetConfig);
+      return (
+        <Container>
+          <Title>{bottomSheetConfig.title}</Title>
+          <Subtitle>{bottomSheetConfig.subTitle}</Subtitle>
+          <BottomSheetAccountDetails account={bottomSheetConfig.accountData} />
+        </Container>
+      );
+    }
+
     return (
       <Container>
         <Title>{bottomSheetConfig.title}</Title>

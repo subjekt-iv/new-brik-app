@@ -6,7 +6,7 @@ import { API_CORE_URL } from "@services/config";
 export const useCoreApi = (path) => {
   const { token } = useBearStore();
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const api = useMemo(() => {
@@ -40,6 +40,7 @@ export const useCoreApi = (path) => {
       setLoading(true);
       const response = await api.post(path, postData);
       setData(response.data);
+      return response.data;
     } catch (error) {
       console.log("error", JSON.stringify(error.response.data));
 
