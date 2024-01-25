@@ -2,11 +2,40 @@ import { SafeAreaView, View } from "react-native";
 import styled from "styled-components";
 import { Text } from "@/components/atoms/text";
 import PasteInput from "@/components/molecules/paste-input";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { OperationsAccountsList } from "@/components/organisms/operations-accounts-list";
+import { useCoreApi } from "@/services/api/useCoreApi";
+import { coreResources } from "@/services/api/useCoreApi/collection";
+import Button from "@/components/atoms/button";
+import { useBearStore } from "@/services/store";
 
 function SendScreen() {
   const [walletAccount, setWalletAccount] = useState("");
+  const { openBottomSheet, setBottomSheetAccountSelectedConfig } =
+    useBearStore();
+
+  const { data, loading, postData, triggerFetch } = useCoreApi(
+    coreResources.SearchWallets
+  );
+
+  const handleContinue = useCallback(async () => {
+    const result = await postData({
+      account: walletAccount,
+    });
+
+    if (result) {
+      await setBottomSheetAccountSelectedConfig({
+        openBottomSheet,
+        accountData: {
+          name: result.titulares[0].denominacion,
+          accountType: result.account_type,
+          accountNumber: result.cvu,
+          bank: result.entidadBancaria,
+          currency: result.moneda,
+        },
+      });
+    }
+  }, [data, walletAccount]);
 
   return (
     <SafeAreaContainer>
@@ -29,6 +58,14 @@ function SendScreen() {
           <OperationsAccountsList title="Contactos recientes" accounts={[]} />
         </MyAccountContainer>
       </Container>
+      <FooterContainer>
+        <Button
+          loading={loading}
+          title="Continuar"
+          onPress={handleContinue}
+          width="auto"
+        />
+      </FooterContainer>
     </SafeAreaContainer>
   );
 }
@@ -61,6 +98,15 @@ const InputContainer = styled(View)`
 const MyAccountContainer = styled(View)`
   display: flex;
   margin-top: 16px;
+`;
+
+const FooterContainer = styled(View)`
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  background-color: ${({ theme }) => theme.background.app};
+  padding-horizontal: 32px;
 `;
 
 export default SendScreen;
