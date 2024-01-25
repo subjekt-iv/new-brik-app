@@ -7,11 +7,13 @@ import {
   AuthStore,
   UserStore,
 } from "./modules/api/user";
+import { OperationsStore, createOperationsStore } from "./modules/operations";
 
-interface BearStore extends AuthStore, UserStore {}
+interface BearStore extends AuthStore, UserStore, OperationsStore {}
 export const useBearStore = create<BearStore>()((...a) => ({
   ...createThemeStore(...a),
   ...createBottomSheetStore(...a),
   ...createAuthStore(...a),
   ...createUserStore(...a),
+  ...createOperationsStore(...a),
 }));

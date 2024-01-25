@@ -9,7 +9,13 @@ const IconWrapper = styled(TouchableOpacity)`
   /* Add your custom styles here */
 `;
 
-const IconComponent = ({ name, size, color, onPress = undefined }) => {
+const IconComponent = ({
+  name,
+  size,
+  color,
+  onPress = undefined,
+  ...props
+}) => {
   if (onPress === undefined) {
     return (
       <IconWrapperPlain>
@@ -19,7 +25,7 @@ const IconComponent = ({ name, size, color, onPress = undefined }) => {
   }
 
   return (
-    <IconWrapper onPress={onPress}>
+    <IconWrapper {...props} onPress={onPress}>
       <Icon name={name} size={size} color={color} />
     </IconWrapper>
   );
