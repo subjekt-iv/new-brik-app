@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Text } from "@/components/atoms/text";
 import PasteInput from "@/components/molecules/paste-input";
 import { useState } from "react";
+import { OperationsAccountsList } from "@/components/organisms/operations-accounts-list";
 
 function SendScreen() {
   const [walletAccount, setWalletAccount] = useState("");
@@ -18,9 +19,15 @@ function SendScreen() {
             text={walletAccount}
             setText={setWalletAccount}
             placeholder="CBU, CVU o Alias"
-            width="%100"
+            width="auto"
           />
         </InputContainer>
+        <MyAccountContainer>
+          <OperationsAccountsList title="Mis cuentas" accounts={[]} />
+        </MyAccountContainer>
+        <MyAccountContainer>
+          <OperationsAccountsList title="Contactos recientes" accounts={[]} />
+        </MyAccountContainer>
       </Container>
     </SafeAreaContainer>
   );
@@ -49,6 +56,11 @@ const TitleText = styled(Text)`
 
 const InputContainer = styled(View)`
   display: flex;
+`;
+
+const MyAccountContainer = styled(View)`
+  display: flex;
+  margin-top: 16px;
 `;
 
 export default SendScreen;
