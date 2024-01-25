@@ -4,14 +4,14 @@ import { createStackNavigator } from "@react-navigation/stack";
 import SendScreen from "@screens/operations/send";
 import { scale } from "react-native-size-matters";
 import styled, { useTheme } from "styled-components";
-import { View } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { navigate } from "@/services/router";
 import { useBearStore } from "@/services/store";
 
 const Stack = createStackNavigator();
 
-const ChevronContainer = styled(View)`
-  margin-left: ${scale(6)}px;
+const ChevronContainer = styled(TouchableOpacity)`
+  margin-left: ${scale(8)}px;
 `;
 
 export function OperationsStack() {
@@ -52,9 +52,8 @@ export function OperationsStack() {
         options={{
           headerLeft: () => {
             return (
-              <ChevronContainer>
+              <ChevronContainer onPress={handleGoBack}>
                 <IconComponent
-                  onPress={handleGoBack}
                   name="chevron-left"
                   size={20}
                   color={theme.icons.primary}
