@@ -83,7 +83,7 @@ function Pin() {
 
 export function MainNavigator() {
   const { isLogged, user } = useBearStore();
-  const pinStatus: boolean = true;
+  const pinStatus: boolean = user ? user.has_pin_enabled : null;
   console.log(pinStatus);
 
   useEffect(() => {
