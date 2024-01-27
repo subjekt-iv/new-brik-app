@@ -2,24 +2,36 @@ import { SafeAreaView, View } from "react-native";
 import styled from "styled-components";
 import { scale, verticalScale } from "react-native-size-matters";
 import { Text } from "@components/atoms/text";
+import PinContainer from "@components/organisms/pin-container";
+import Button from "@/components/atoms/button";
+import { useBearStore } from "@/services/store";
 // import { navigate } from "@services/router";
 
 function PinScreen() {
-  //   const goToLogin = () => {
-  //     navigate("LoginScreen", {});
-  //   };
+  const { setProvidePin } = useBearStore();
+  const handleProvidePin = () => {
+    setProvidePin(true);
+  };
+
   return (
     <SafeAreaContainer>
       <Container>
         <Text
           style={{
             color: "#f6f6f6",
-            fontSize: scale(28),
-            marginTop: verticalScale(24),
+            fontSize: scale(24),
+            marginTop: verticalScale(12),
           }}
         >
-          PIN de Seguridad
+          PIN de seguridad
         </Text>
+        <PinContainer style={{ marginTop: scale(64) }} />
+        <Button
+          bordered={true}
+          title="Provide Pin"
+          width={scale(300)}
+          onPress={handleProvidePin}
+        />
       </Container>
     </SafeAreaContainer>
   );

@@ -1,16 +1,14 @@
-import { useEffect, useMemo } from "react";
-import { useTheme } from "styled-components/native";
+import React, { useRef, useState, useEffect, useMemo } from "react";
+import { AppState } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
 import { NavigationContainer } from "@react-navigation/native";
 import { navigate, navigationRef } from "@services/router";
-
 import { OnBoardingStack } from "./stacks/on-boarding";
 import { PinStack } from "./stacks/pin";
 import { HomeStack } from "./stacks/home";
 import { OperationsStack } from "./stacks/operations/send";
-
 import IconComponent from "@components/atoms/icon";
 import { useBearStore } from "@services/store";
 
@@ -108,26 +106,48 @@ function Pin() {
 }
 
 export function MainNavigator() {
-  const { isLogged, user } = useBearStore();
-  const pinStatus: boolean = true;
+  const { isLogged, user, did_provide_pin, setProvidePin } = useBearStore();
+  const userPinStatus: boolean = user ? user.has_pin_enabled : null;
+  const didProvidePin: boolean = did_provide_pin;
+  const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
 
   useEffect(() => {
-    isLogged && !pinStatus && navigate("HomeStack", {});
+    const subscription = AppState.addEventListener("change", (nextAppState) => {
+      if (nextAppState === "inactive" || nextAppState === "background") {
+        console.log("App in inactive/background state");
+        setTimeout(() => {
+          if (isLogged && userPinStatus) {
+            setProvidePin(false);
+          }
+        }, 300);
+      } else if (nextAppState === "active") {
+        console.log("App has come to the foreground!");
+      }
+      appState.current = nextAppState;
+      setAppStateVisible(appState.current);
+      console.log("AppState", appState.current);
+    });
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
+  useEffect(() => {
+    isLogged && !userPinStatus && navigate("HomeStack", {});
     !isLogged && navigate("OnBoardingStack", {});
     console.log("MainNavigator -> isLogged", isLogged);
   }, [isLogged]);
 
   const renderAuthStack = () => {
-    // if (pinStatus === true) {
-    //   return <Pin />;
-    // }
+    if (isLogged && userPinStatus && !didProvidePin) {
+      return <Pin />;
+    }
     return <AuthStack />;
   };
-
   const renderGuestStack = () => {
     return <GuestStack />;
   };
-
   return (
     <NavigationContainer ref={navigationRef}>
       {isLogged ? renderAuthStack() : renderGuestStack()}
