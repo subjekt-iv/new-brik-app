@@ -15,9 +15,17 @@ const Separator = styled(View)`
 
 export function BottomSheetCurrencyList({ currencies = [] }) {
   // @ts-ignore next-line
-  const { setCurrencySelected, openBottomSheet, setOpenBottomSheet } =
-    useBearStore();
-  const handleSetCurrencySelected = (currency) => {
+  const {
+    setCurrencySelected,
+    bottomSheetConfig,
+    openBottomSheet,
+    setOpenBottomSheet,
+    setSendOperationConfig,
+  } = useBearStore();
+  const handleSetCurrencySelected = async (currency) => {
+    if (bottomSheetConfig.type === "send") {
+      await setSendOperationConfig(currency);
+    }
     setCurrencySelected(currency);
     setOpenBottomSheet(!openBottomSheet);
   };

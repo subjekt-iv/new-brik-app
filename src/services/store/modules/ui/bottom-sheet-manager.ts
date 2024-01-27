@@ -48,6 +48,7 @@ export const createBottomSheetStore = (set) => ({
     type: "",
     title: "",
     subTitle: "",
+    accountData: {},
   },
   setOpenBottomSheet: (value: boolean) => set({ openBottomSheet: value }),
   setBottomSheetConfig: (config: BottomSheetConfig) =>
@@ -95,6 +96,24 @@ export const createBottomSheetStore = (set) => ({
         subTitle: "Elige la moneda que quieras usar.",
         currencies,
       },
+      openBottomSheet: !openBottomSheet,
+    });
+    set({ openBottomSheet: !openBottomSheet });
+  },
+  setBottomSheetAccountSelectedConfig: ({
+    openBottomSheet,
+    accountData,
+    onContinue,
+  }) => {
+    set({
+      bottomSheetConfig: {
+        type: "accountSelected",
+        title: accountData.name,
+        subTitle: "",
+        accountData,
+        onContinue,
+      },
+
       openBottomSheet: !openBottomSheet,
     });
     set({ openBottomSheet: !openBottomSheet });
