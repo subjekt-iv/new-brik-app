@@ -3,12 +3,12 @@ import { AppState } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
 import { navigate, navigationRef } from "@services/router";
 import { OnBoardingStack } from "./stacks/on-boarding";
 import { PinStack } from "./stacks/pin";
 import { HomeStack } from "./stacks/home";
 import { OperationsStack } from "./stacks/operations/send";
+import { useTheme } from "styled-components";
 import IconComponent from "@components/atoms/icon";
 import { useBearStore } from "@services/store";
 
