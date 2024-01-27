@@ -4,9 +4,11 @@ export interface AuthStore {
   token: string | null;
   isLogged: boolean;
   error_code: number | null;
+  did_provide_pin: boolean;
   setToken: (token: string) => Promise<void>;
   removeToken: () => Promise<void>;
   setErrorCode: (errorCode: number) => Promise<void>;
+  setProvidePin: (params: boolean) => Promise<void>;
 }
 export interface UserStore {
   user: User | null;
@@ -43,6 +45,7 @@ export const createAuthStore = (set): AuthStore => ({
   token: getItem("token"),
   isLogged: !!getItem("token"),
   error_code: null,
+  did_provide_pin: false,
   setToken: async (token: string) => {
     await setItem("token", token);
     set({
@@ -62,6 +65,9 @@ export const createAuthStore = (set): AuthStore => ({
     setTimeout(async () => {
       await set({ error_code: null });
     }, 5000);
+  },
+  setProvidePin: async (params: boolean) => {
+    await set({ did_provide_pin: params });
   },
 });
 
