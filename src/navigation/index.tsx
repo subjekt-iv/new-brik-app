@@ -109,7 +109,6 @@ export function MainNavigator() {
   const { isLogged, user, did_provide_pin, setProvidePin } = useBearStore();
   const userPinStatus: boolean = user ? user.has_pin_enabled : null;
   const didProvidePin: boolean = did_provide_pin;
-
   const appState = useRef(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
 
@@ -146,11 +145,9 @@ export function MainNavigator() {
     }
     return <AuthStack />;
   };
-
   const renderGuestStack = () => {
     return <GuestStack />;
   };
-
   return (
     <NavigationContainer ref={navigationRef}>
       {isLogged ? renderAuthStack() : renderGuestStack()}
