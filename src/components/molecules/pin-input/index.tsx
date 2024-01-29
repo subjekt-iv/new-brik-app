@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components/native";
 import { scale, verticalScale } from "react-native-size-matters";
 import Input from "@components/atoms/input";
-import { Text, View, StyleProp, ViewStyle } from "react-native";
+import { View } from "react-native";
 
 interface PinInputProps {
   label: string;
@@ -14,6 +14,8 @@ interface PinInputProps {
   showError?: boolean;
   showAlert?: boolean;
   secureTextEntry?: boolean;
+  maxLength?: number;
+  constrainLength?: (maxlength: number) => void;
   onChangeText?: (text: string) => void;
 }
 
@@ -35,6 +37,7 @@ export function PinInput({
   showError,
   showAlert,
   secureTextEntry,
+  maxLength,
   ...props
 }: PinInputProps) {
   return (
@@ -45,7 +48,8 @@ export function PinInput({
         width={scale(inputWidth)}
         height={verticalScale(inputHeight)}
         secureTextEntry={secureTextEntry}
-        editable={false}
+        maxLength={1}
+        // editable={false}
       />
     </Container>
   );
