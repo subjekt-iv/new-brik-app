@@ -3,7 +3,7 @@ import axios from "axios";
 import { useBearStore } from "@services/store";
 import { API_CORE_URL } from "@services/config";
 
-export const useCoreApi = (path) => {
+export const useCoreApi = (path: string) => {
   const { token } = useBearStore();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -27,14 +27,13 @@ export const useCoreApi = (path) => {
       setData(response.data);
     } catch (error) {
       console.log("error", JSON.stringify(error.response.data));
-
       setError(error);
     } finally {
       setLoading(false);
     }
   }, [api, path, token]);
 
-  const postData = async (postData) => {
+  const postData = async (postData: object) => {
     try {
       if (!token) throw new Error("Token is required");
       setLoading(true);
@@ -43,7 +42,6 @@ export const useCoreApi = (path) => {
       return response.data;
     } catch (error) {
       console.log("error", JSON.stringify(error.response.data));
-
       setError(error);
     } finally {
       setLoading(false);

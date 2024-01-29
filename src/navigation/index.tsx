@@ -114,13 +114,11 @@ export function MainNavigator() {
 
   useEffect(() => {
     const subscription = AppState.addEventListener("change", (nextAppState) => {
-      if (nextAppState === "inactive" || nextAppState === "background") {
+      if (nextAppState === "background") {
         console.log("App in inactive/background state");
-        setTimeout(() => {
-          if (isLogged && userPinStatus) {
-            setProvidePin(false);
-          }
-        }, 300);
+        if (isLogged && userPinStatus) {
+          setProvidePin(false);
+        }
       } else if (nextAppState === "active") {
         console.log("App has come to the foreground!");
       }

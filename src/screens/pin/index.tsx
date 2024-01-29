@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { SafeAreaView, View } from "react-native";
 import styled from "styled-components";
 import { scale, verticalScale } from "react-native-size-matters";
@@ -5,13 +6,34 @@ import { Text } from "@components/atoms/text";
 import PinContainer from "@components/organisms/pin-container";
 import Button from "@/components/atoms/button";
 import { useBearStore } from "@/services/store";
-// import { navigate } from "@services/router";
+import { useCoreApi } from "@/services/api/useCoreApi";
+import { coreResources } from "@/services/api/useCoreApi/collection";
+
+interface PinData {
+  pin: string;
+  storedValues: string;
+}
 
 function PinScreen() {
+  const [pin, setPin] = useState("");
+  const { data, loading, postData } = useCoreApi(coreResources.VerifyPin);
   const { setProvidePin } = useBearStore();
-  const handleProvidePin = () => {
-    setProvidePin(true);
+
+  const handlePinChange = (pinData: PinData) => {
+    const { pin: newPin, storedValues } = pinData;
+    setPin(newPin);
   };
+  const verifyPin = async () => {
+    const payload = {
+      pin: pin,
+    };
+    await postData(payload);
+  };
+  useEffect(() => {
+    if (data) {
+      setProvidePin(true);
+    }
+  });
 
   return (
     <SafeAreaContainer>
@@ -25,12 +47,15 @@ function PinScreen() {
         >
           PIN de seguridad
         </Text>
-        <PinContainer style={{ marginTop: scale(64) }} />
+        <PinContainer
+          style={{ marginTop: scale(64) }}
+          onPinChange={handlePinChange}
+        />
         <Button
-          bordered={true}
           title="Provide Pin"
           width={scale(300)}
-          onPress={handleProvidePin}
+          onPress={verifyPin}
+          loading={loading}
         />
       </Container>
     </SafeAreaContainer>

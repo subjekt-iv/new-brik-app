@@ -1,54 +1,42 @@
+import React, { useState } from "react";
 import { View, StyleProp, ViewStyle } from "react-native";
 import styled from "styled-components";
 import { scale, verticalScale } from "react-native-size-matters";
 import { PinInput } from "@components/molecules/pin-input";
-// import { navigate } from "@services/router";
 
-interface ContainerProps {
+export interface ContainerProps {
   style?: StyleProp<ViewStyle>;
+  onPinChange: (pinData: { pin: string; storedValues: string }) => void;
 }
 
 export default function PinContainer({
-  style, // Add style property
+  style,
+  onPinChange,
   ...props
 }: ContainerProps) {
-  //   const goToLogin = () => {
-  //     navigate("LoginScreen", {});
-  //   };
+  const [storedValues, setStoredValues] = useState<string>("");
+  const handlePinChange = (value: string) => {
+    const newStoredValues = storedValues + value;
+    setStoredValues(newStoredValues);
+    onPinChange({ pin: newStoredValues, storedValues: newStoredValues });
+  };
+
   return (
     <InputsContainer {...props} style={style}>
-      <PinInput
-        color="#f6f6f6"
-        label=""
-        placeholder=""
-        inputWidth={30}
-        inputHeight={30}
-        visible={true}
-      ></PinInput>
-      <PinInput
-        color="#f6f6f6"
-        label=""
-        placeholder=""
-        inputWidth={30}
-        inputHeight={30}
-        visible={true}
-      ></PinInput>
-      <PinInput
-        color="#f6f6f6"
-        label=""
-        placeholder=""
-        inputWidth={30}
-        inputHeight={30}
-        visible={true}
-      ></PinInput>
-      <PinInput
-        color="#f6f6f6"
-        label=""
-        placeholder=""
-        inputWidth={30}
-        inputHeight={30}
-        visible={true}
-      ></PinInput>
+      {[1, 2, 3, 4].map((index) => (
+        <PinInput
+          key={index}
+          color="#f6f6f6"
+          label=""
+          placeholder=""
+          inputWidth={30}
+          inputHeight={30}
+          visible={true}
+          secureTextEntry={true}
+          onChangeText={(value) => handlePinChange(value)}
+          // constrainLength={1}
+        />
+      ))}
     </InputsContainer>
   );
 }
