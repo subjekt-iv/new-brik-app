@@ -16,7 +16,8 @@ function LoginScreen() {
     navigate("OnBoardingStack", { screen: "RegisterScreen" });
   };
   const { data, loading, postData } = useGuestCoreApi(guestCoreResources.Login);
-  const { setToken, setUser, error_code } = useBearStore();
+  const { setAccessToken, setUser, error_code, setRefreshToken } =
+    useBearStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showAlert, setShowAlert] = useState(false);
@@ -39,7 +40,8 @@ function LoginScreen() {
   useEffect(() => {
     if (data) {
       setUser(data.user);
-      setToken(data.access_token);
+      setAccessToken(data.access_token);
+      setRefreshToken(data.refresh_token);
     }
   }, [data]);
 

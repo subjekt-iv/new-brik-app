@@ -5,7 +5,8 @@ export interface AuthStore {
   isLogged: boolean;
   error_code: number | null;
   did_provide_pin: boolean;
-  setToken: (token: string) => Promise<void>;
+  setAccessToken: (token: string) => Promise<void>;
+  setRefreshToken: (token: string) => Promise<void>;
   removeToken: () => Promise<void>;
   setErrorCode: (errorCode: number) => Promise<void>;
   setProvidePin: (params: boolean) => Promise<void>;
@@ -46,12 +47,15 @@ export const createAuthStore = (set): AuthStore => ({
   isLogged: !!getItem("token"),
   error_code: null,
   did_provide_pin: false,
-  setToken: async (token: string) => {
+  setAccessToken: async (token: string) => {
     await setItem("token", token);
     set({
       token,
       isLogged: !!token,
     });
+  },
+  setRefreshToken: async (token: string) => {
+    await setItem("refresh_token", token);
   },
   removeToken: async () => {
     await removeItem("token");
