@@ -1,7 +1,8 @@
 import { getItem, removeItem, setItem } from "@services/storage";
 
 export interface AuthStore {
-  token: string | null;
+  access_token: string | null;
+  refresh_token: string | null;
   isLogged: boolean;
   error_code: number | null;
   did_provide_pin: boolean;
@@ -43,24 +44,31 @@ export interface User {
 }
 
 export const createAuthStore = (set): AuthStore => ({
-  token: getItem("token"),
-  isLogged: !!getItem("token"),
+  access_token: getItem("access_token"),
+  refresh_token: getItem("refresh_token"),
+  isLogged: !!getItem("access_token"),
   error_code: null,
   did_provide_pin: false,
   setAccessToken: async (token: string) => {
-    await setItem("token", token);
+    await setItem("access_token", token);
     set({
-      token,
+      access_token: token,
       isLogged: !!token,
     });
   },
   setRefreshToken: async (token: string) => {
     await setItem("refresh_token", token);
+    set({
+      refresh_token: token,
+    });
   },
   removeToken: async () => {
-    await removeItem("token");
+    await removeItem("access_token");
+    await removeItem("refresh_token");
     set({
-      token: null,
+      access_token: null,
+      refresh_token: null,
+      did_provide_pin: false,
       isLogged: false,
     });
   },
