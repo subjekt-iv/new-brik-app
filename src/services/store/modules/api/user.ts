@@ -50,6 +50,7 @@ export const createAuthStore = (set): AuthStore => ({
   error_code: null,
   did_provide_pin: false,
   setAccessToken: async (token: string) => {
+    // console.log("new access token");
     await setItem("access_token", token);
     set({
       access_token: token,
@@ -57,6 +58,7 @@ export const createAuthStore = (set): AuthStore => ({
     });
   },
   setRefreshToken: async (token: string) => {
+    // console.log("new refresh token");
     await setItem("refresh_token", token);
     set({
       refresh_token: token,

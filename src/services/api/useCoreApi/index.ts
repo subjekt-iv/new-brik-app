@@ -13,20 +13,17 @@ export const useCoreApi = (path: string) => {
 
   const api = useMemo(() => {
     if (!access_token) return null;
-
     const instance = axios.create({
       baseURL: API_CORE_URL,
       headers: {
         Authorization: `Bearer ${access_token}`,
       },
     });
-
     instance.interceptors.response.use(
-      (response) => {
-        return response;
-      },
+      (response) => response,
       async (error) => {
-        if (error.response.status === 403) {
+        if (error.response.status === 403 && !error.config._retry) {
+          error.config._retry = true;
           try {
             const refreshResponse = await axios.post(
               `${API_CORE_URL}/${coreResources.RefreshToken}`,
@@ -34,23 +31,24 @@ export const useCoreApi = (path: string) => {
                 refresh: refresh_token,
               }
             );
-            const new_access_token = refreshResponse.data.access;
-            const new_refresh_token = refreshResponse.data.refresh;
-            setAccessToken(new_access_token);
-            setRefreshToken(new_refresh_token);
-            // instance.defaults.headers[
-            //   "Authorization"
-            // ] = `Bearer ${new_access_token}`;
-            return instance(error.config);
+            const newAccessToken = refreshResponse.data.access;
+            const newRefreshToken = refreshResponse.data.refresh;
+            setAccessToken(newAccessToken);
+            setRefreshToken(newRefreshToken);
+            console.log("Token refreshed");
+            error.config.headers.Authorization = `Bearer ${newAccessToken}`;
+            return axios.request(error.config);
           } catch (refreshError) {
             console.error("Failed to refresh token:", refreshError);
+            return Promise.reject(refreshError);
           }
         }
         return Promise.reject(error);
       }
     );
+
     return instance;
-  }, [access_token]);
+  }, [access_token, refresh_token, setAccessToken, setRefreshToken]);
 
   const fetchData = useCallback(async () => {
     try {
