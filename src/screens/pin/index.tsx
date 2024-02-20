@@ -8,6 +8,10 @@ import Button from "@/components/atoms/button";
 import { useBearStore } from "@/services/store";
 import { useCoreApi } from "@/services/api/useCoreApi";
 import { coreResources } from "@/services/api/useCoreApi/collection";
+import {
+  authenticate,
+  getAvailableAuthenticationTypes,
+} from "@/utils/biometrics";
 
 interface PinData {
   pin: string;
@@ -15,9 +19,34 @@ interface PinData {
 }
 
 function PinScreen() {
-  const [pin, setPin] = useState("");
+  const [pin, setPin] = useState<string>("");
+  const [biometricStatus, setBiometricStatus] = useState<boolean>(false);
+  const [biometricAvailable, setBiometricAvailable] = useState<boolean>(false);
   const { data, loading, postData } = useCoreApi(coreResources.VerifyPin);
   const { setProvidePin } = useBearStore();
+
+  useEffect(() => {
+    const checkAvailableAuthenticationTypes = async () => {
+      const availableTypes = await getAvailableAuthenticationTypes();
+      setBiometricAvailable(availableTypes.includes("2"));
+      if (availableTypes.includes("2")) {
+        await handleAuthentication();
+      }
+    };
+    checkAvailableAuthenticationTypes();
+  }, []);
+
+  const handleAuthentication = async () => {
+    let isAuthenticated = false;
+    isAuthenticated = await authenticate();
+    if (isAuthenticated) {
+      setBiometricStatus(true);
+      console.log("Authentication successful");
+    } else {
+      // In case of failure, we can prompt the user to provide PIN
+      console.log("Authentication failed");
+    }
+  };
 
   const handlePinChange = (pinData: PinData) => {
     const { pin: newPin, storedValues } = pinData;
@@ -30,7 +59,7 @@ function PinScreen() {
     await postData(payload);
   };
   useEffect(() => {
-    if (data) {
+    if (data || biometricStatus) {
       setProvidePin(true);
     }
   });
