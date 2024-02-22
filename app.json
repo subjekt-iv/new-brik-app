@@ -6,6 +6,14 @@
     "assetBundlePatterns": ["**/*"],
     "experiments": {
       "tsconfigPaths": true
-    }
+    },
+    "plugins": [
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Allow Brik to use Face ID."
+        }
+      ]
+    ]
   }
 }
