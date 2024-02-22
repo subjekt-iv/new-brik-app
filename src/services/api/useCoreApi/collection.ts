@@ -3,4 +3,5 @@ export const coreResources = {
   SearchWallets: "wallets/consultacuenta/",
   Currencies: "currencies/",
   VerifyPin: "users/pin/verify/",
+  RefreshToken: "token/refresh/",
 };

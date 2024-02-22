@@ -1,11 +1,13 @@
 import { getItem, removeItem, setItem } from "@services/storage";
 
 export interface AuthStore {
-  token: string | null;
+  access_token: string | null;
+  refresh_token: string | null;
   isLogged: boolean;
   error_code: number | null;
   did_provide_pin: boolean;
-  setToken: (token: string) => Promise<void>;
+  setAccessToken: (token: string) => Promise<void>;
+  setRefreshToken: (token: string) => Promise<void>;
   removeToken: () => Promise<void>;
   setErrorCode: (errorCode: number) => Promise<void>;
   setProvidePin: (params: boolean) => Promise<void>;
@@ -42,21 +44,33 @@ export interface User {
 }
 
 export const createAuthStore = (set): AuthStore => ({
-  token: getItem("token"),
-  isLogged: !!getItem("token"),
+  access_token: getItem("access_token"),
+  refresh_token: getItem("refresh_token"),
+  isLogged: !!getItem("access_token"),
   error_code: null,
   did_provide_pin: false,
-  setToken: async (token: string) => {
-    await setItem("token", token);
+  setAccessToken: async (token: string) => {
+    // console.log("new access token");
+    await setItem("access_token", token);
     set({
-      token,
+      access_token: token,
       isLogged: !!token,
     });
   },
-  removeToken: async () => {
-    await removeItem("token");
+  setRefreshToken: async (token: string) => {
+    // console.log("new refresh token");
+    await setItem("refresh_token", token);
     set({
-      token: null,
+      refresh_token: token,
+    });
+  },
+  removeToken: async () => {
+    await removeItem("access_token");
+    await removeItem("refresh_token");
+    set({
+      access_token: null,
+      refresh_token: null,
+      did_provide_pin: false,
       isLogged: false,
     });
   },
